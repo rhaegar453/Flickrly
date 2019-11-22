@@ -23,11 +23,21 @@
     -ms-flex-align: center;
     align-items: center;
 }
+.recommendationBox:hover{
+    background-color: lightblue;
+}
 
+.boxPosition{
+    position: absolute;
+    width: 95%;
+  }
 @media (max-width:479px){
     .iconimage{
         width: 40px;
         height: 40px;
         border-radius: 20px;
+    }
+    .boxPosition{
+        position: relative;
     }
 }

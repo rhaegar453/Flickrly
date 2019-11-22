@@ -16,6 +16,9 @@ class App extends React.Component {
             <Search />
           </div>
         </div>
+        <div className="container marginate">
+          <h1><u>Results</u></h1>
+        </div>
       </div>
     );
   }
