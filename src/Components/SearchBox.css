@@ -1,0 +1,33 @@
+.recommendationBox{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    margin-top: 5px;
+    border-radius: 20px;
+    background-color: #ececec;
+}
+.iconimage{
+    width: 80px;
+    height: 67px;
+    padding: 8px;
+    border-radius: 20px;
+}
+
+.text-block{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+@media (max-width:479px){
+    .iconimage{
+        width: 40px;
+        height: 40px;
+        border-radius: 20px;
+    }
+}

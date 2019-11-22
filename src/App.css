@@ -20,3 +20,33 @@
 .App-link {
   color: #09d3ac;
 }
+
+.fontCss{
+  font-family: 'Open Sans', sans-serif;
+}
+
+
+.centeredCss{
+  display: flex;
+  justify-content: center;
+}
+
+.recommendationItem{
+  background-color: #eef2f3;
+  border-radius: 12px;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+
+.image{
+  width: 80px;
+  height: 67px;
+  object-fit: contain;
+  border-radius: 24px;
+  background-color: #d8d8d8;
+}
+
+.inputBox{
+  padding: 10px;
+}

@@ -1,19 +1,29 @@
 import * as actions from '../ActionTypes/index';
 
 const initialState={
-    message:"Hello World",
-    value:0
+    searchQuery:'',
+    groupSearchQuery:'',
+    groupRecommendations:[], 
+    groups:[], 
+    error:null, 
+    loading:false
 }
 
 
 const reducer=(state=initialState, action)=>{
     switch(action.type){
-        case actions.HELLO_WORLD:
-            return {...state, message:"Hello Boilerplate"};
-        case 'INCREMENT':
-            return {...state, value:state.value+1}
-        case 'DECREMENT':
-            return {...state, value:state.value-1};
+        case actions.SEARCH_GROUPS_START:
+            return {...state, loading:true}
+        case actions.SEARCH_GROUPS_SUCCESS:
+            return {...state, loading:false, groupRecommendations:action.payload};
+        case actions.SEARCH_GROUPS_FAILURE:
+            return {...state, loading:false, error:action.payload}
+        case actions.GET_GROUPS_START:
+            return {...state, loading:true}
+        case actions.GET_GROUPS_SUCCESS:
+            return {...state, loading:false, groups:action.payload}
+        case actions.GET_GROUPS_FAILURE:
+            return {...state, loading:false, error:action.payload }
         default:
             return {...state};
     }

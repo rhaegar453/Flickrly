@@ -1,45 +1,24 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {decrementValue, incrementValue} from './store/Actions/index';
+import Navbar from './Components/Navbar';
+import './App.css';
+import Search from './Components/Search';
 
-
-class App extends React.Component{
-  constructor(props){
+class App extends React.Component {
+  constructor(props) {
     super(props);
   }
-  increment=(e)=>{
-    e.preventDefault();
-    this.props.increment();
-  }
-
-  decrement=(e)=>{
-    e.preventDefault();
-    this.props.decrementValue();
-  }
-  render(){
-    return(
-      <div>
-        <h1>Hello World</h1>
-        <h2>State : {this.props.value}</h2>
-        <button type="button" onClick={this.increment} >Increment</button>
-        <button type="button" onClick={this.decrement}>Decrement</button>
+  render() {
+    return (
+      <div className='fontCss'>
+        <Navbar />
+        <div className="centeredCss" style={{ marginTop: '20px' }}>
+          <div className="col-md-4">
+            <Search />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-const mapStateToProps=(state)=>{
-  return {
-    value:state.value
-  }
-}
-
-const mapDispatchToProps=(dispatch)=>{
-  return {
-    increment:()=>dispatch(incrementValue()),
-    decrementValue:()=>dispatch(decrementValue())
-  }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
