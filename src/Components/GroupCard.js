@@ -14,7 +14,7 @@ class GroupCard extends React.Component {
     }
     handleClick = () => {
         this.props.selectGroup(this.props.data);
-        this.props.getImagesForGroup(this.props.data);
+/*         this.props.getImagesForGroup(this.props.data); */
         this.props.history.push(`/gallery/${this.props.data.nsid}`);
     }
     imageFallbackOnError = (e) => {

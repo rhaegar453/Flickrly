@@ -2,13 +2,14 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './SearchBox.css';
+import {getImagesForGroup} from '../store/Actions/index';
 
 class GroupDetail extends React.Component {
     constructor(props) {
         super(props);
     }
     componentDidMount() {
-        console.log(this.props.match.params.nsid);
+        this.props.getImagesForGroup();
     }
     render() {
         return (
@@ -32,7 +33,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return {}
+    return {
+        getImagesForGroup:()=>dispatch(getImagesForGroup())
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GroupDetail));
