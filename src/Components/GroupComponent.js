@@ -17,14 +17,14 @@ class GroupComponent extends React.Component {
                         <Search />
                     </div>
                 </div>
-                <div className="container marginate">
+                {this.props.groups.length>0?                <div className="container marginate">
                     <h1><u>Results</u></h1>
                     <div className="w-layout-grid grid">
                         {this.props.groups.map(item => (
                             <GroupCard data={item} key={item.nsid}></GroupCard>
                         ))}
                     </div>
-                </div>
+                </div>:null}
             </div>
         );
     }

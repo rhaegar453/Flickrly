@@ -2,7 +2,9 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './SearchBox.css';
-import {getImagesForGroup} from '../store/Actions/index';
+import { getImagesForGroup } from '../store/Actions/index';
+import StaggeredCard from './StaggeredCard';
+import DetailComponent from './DetailComponent';
 
 class GroupDetail extends React.Component {
     constructor(props) {
@@ -13,11 +15,11 @@ class GroupDetail extends React.Component {
     }
     render() {
         return (
-            <div className="container">
-                {this.props.loading ? <h3>Loading...</h3> : <div className="row">
+            <div className="container centeredCss">
+                {this.props.loading ? <h3>Loading...</h3> : <div className="row centeredCss">
                     {this.props.selectedGroupImages ? this.props.selectedGroupImages.map(item => (
-                        <div>
-                            <img src={item.url} className="staggeredImage"></img>
+                        <div className="blockImage flexer" style={{ backgroundImage: `url(${item.url})` }}>
+                            <DetailComponent data={item}/>
                         </div>
                     )) : null}
                 </div>}
@@ -34,7 +36,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getImagesForGroup:()=>dispatch(getImagesForGroup())
+        getImagesForGroup: () => dispatch(getImagesForGroup())
     }
 }
 
