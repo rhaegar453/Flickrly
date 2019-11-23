@@ -2,6 +2,12 @@ import React from 'react';
 import Navbar from './Components/Navbar';
 import './App.css';
 import Search from './Components/Search';
+import { isModuleDeclaration } from '@babel/types';
+import GroupCard from './Components/GroupCard';
+import { connect } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
+import GroupComponent from './Components/GroupComponent';
+import GroupDetail from './Components/GroupDetail';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,17 +17,19 @@ class App extends React.Component {
     return (
       <div className='fontCss'>
         <Navbar />
-        <div className="centeredCss" style={{ marginTop: '20px' }}>
-          <div className="col-md-4">
-            <Search />
-          </div>
-        </div>
-        <div className="container marginate">
-          <h1><u>Results</u></h1>
-        </div>
+        <Switch>
+          <Route path="/gallery/:nsid"><GroupDetail/></Route>
+          <Route path="/groups" exact={true}><GroupComponent /></Route>
+        </Switch>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    groups: state.groups
+  }
+}
+
+export default connect(mapStateToProps, null)(App);

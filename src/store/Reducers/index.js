@@ -6,6 +6,7 @@ const initialState={
     groupRecommendations:[], 
     groups:[], 
     error:null, 
+    selectedGroup:null, 
     loading:false
 }
 
@@ -24,6 +25,8 @@ const reducer=(state=initialState, action)=>{
             return {...state, loading:false, groups:action.payload}
         case actions.GET_GROUPS_FAILURE:
             return {...state, loading:false, error:action.payload }
+        case actions.SELECT_GROUP:
+            return {...state, selectedGroup:action.payload}
         default:
             return {...state};
     }
