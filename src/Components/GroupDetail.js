@@ -1,15 +1,38 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import './SearchBox.css';
 
-
-export default class GroupDetail extends React.Component{
-    constructor(props){
+class GroupDetail extends React.Component {
+    constructor(props) {
         super(props);
     }
-    render(){
-        return(
-            <div>
-                <h1>This is the Group Detail Component</h1>
+    componentDidMount() {
+        console.log(this.props.match.params.nsid);
+    }
+    render() {
+        return (
+            <div className="container">
+                {this.props.loading ? <h3>Loading...</h3> : <div className="row">
+                    {this.props.selectedGroupImages ? this.props.selectedGroupImages.map(item => (
+                        <div>
+                            <img src={item.url} className="staggeredImage"></img>
+                        </div>
+                    )) : null}
+                </div>}
             </div>
         );
     }
 }
+const mapStateToProps = (state) => {
+    return {
+        selectedGroupImages: state.selectedGroupImages,
+        loading: state.loading
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {}
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GroupDetail));

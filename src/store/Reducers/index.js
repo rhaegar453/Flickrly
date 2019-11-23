@@ -7,7 +7,9 @@ const initialState={
     groups:[], 
     error:null, 
     selectedGroup:null, 
-    loading:false
+    selectedGroupImages:null, 
+    loading:false,
+    selectedGroupWithInfo:null
 }
 
 
@@ -27,6 +29,10 @@ const reducer=(state=initialState, action)=>{
             return {...state, loading:false, error:action.payload }
         case actions.SELECT_GROUP:
             return {...state, selectedGroup:action.payload}
+        case actions.GET_IMAGES_FOR_GROUP_START:
+            return {...state, loading:true}
+        case actions.GET_IMAGES_FOR_GROUP_SUCCESS:
+            return {...state,selectedGroupImages:action.payload, loading:false}
         default:
             return {...state};
     }

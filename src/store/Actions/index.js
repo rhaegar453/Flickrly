@@ -11,6 +11,10 @@ export const getGroupStart=()=>({type:actions.GET_GROUPS_START});
 export const getGroupSuccess=(data)=>({type:actions.GET_GROUPS_SUCCESS, payload:data});
 export const getGroupFailure=(err)=>({type:actions.GET_GROUPS_FAILURE, payload:err});
 
+export const getImagesForGroup=(payload)=>({type:actions.GET_IMAGES_FOR_GROUP, payload:payload});
+export const getImagesForGroupStart=()=>({type:actions.GET_IMAGES_FOR_GROUP_START});
+export const getImagesForGroupSuccess=(data)=>({type:actions.GET_IMAGES_FOR_GROUP_SUCCESS, payload:data});
+export const getImagesForGroupFailure=(err)=>({type:actions.GET_IMAGES_FOR_GROUP_FAILURE});
 
 export const selectGroup=(groupDetails)=>({type:actions.SELECT_GROUP, payload:groupDetails});
 
