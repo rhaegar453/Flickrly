@@ -5,6 +5,7 @@ import RecommendationItem from './RecommendationItem';
 import { connect } from 'react-redux';
 import { searchGroup, getGroups } from '../store/Actions/index';
 import { withRouter } from 'react-router-dom';
+import {debounce} from 'lodash';
 
 class SearchBox extends React.Component {
     constructor(props) {
@@ -16,13 +17,19 @@ class SearchBox extends React.Component {
             selectedGroup: {}
         }
     }
-    changeInputText = (e) => {
-        console.log(e.target.value);
-        let { value } = e.target;
-        this.setState({ searchQuery: value, showRecommendations: true }, () => {
-            this.props.searchGroup(value);
-        })
+    debounceEvent(...args){
+        this.debounceEvent=debounce(...args);
+        return e=>{
+            e.persist();
+            return this.debounceEvent(e);
+        }
     }
+
+    changeInputText = debounce((text) => {
+        this.setState({ searchQuery:text, showRecommendations: true }, () => {
+            this.props.searchGroup(text);
+        })
+    }, 1000);
     createIconURL = ({ nsid, iconserver, iconfarm }) => {
         return `http://farm${iconfarm}.staticflickr.com/${iconserver}/buddyicons/${nsid}.jpg`
     }
@@ -44,7 +51,7 @@ class SearchBox extends React.Component {
     render() {
         return (
             <div>
-                <input className="form-control inputBox" value={this.state.searchQuery} placeholder="Search for Groups" onChange={this.changeInputText} onKeyPress={this.handleEnterButton}></input>
+                <input className="form-control inputBox"  placeholder="Search for Groups" onChange={(e)=>this.changeInputText(e.target.value)} onKeyPress={this.handleEnterButton}></input>
                 {this.props.groupRecommendations && this.state.showRecommendations && this.state.searchQuery != '' ? <div className='boxPosition'>
                     {this.props.groupRecommendations.map(item => (
                         <RecommendationItem key={item.name} onClick={() => this.selectItem(item)} icon={this.createIconURL(item)} text={item.name}></RecommendationItem>

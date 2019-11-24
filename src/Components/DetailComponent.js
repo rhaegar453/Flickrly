@@ -1,5 +1,6 @@
 import React from 'react';
 import './SearchBox.css';
+import moment from 'moment';
 
 const DetailComponent = ({ data }) => {
     return (
@@ -10,6 +11,7 @@ const DetailComponent = ({ data }) => {
             <div className="spaceAroundCss">
                 <div className="smallTextCss">Views: <b>{data.views}</b></div>
                 <div className="smallTextCss">Comments: <b>{data.comments}</b></div>
+                <div className="smallTextCss">Uploaded: <b>{moment.unix(data.date).format('DD/MM/YYYY')}</b></div>
             </div>
         </div>
     );

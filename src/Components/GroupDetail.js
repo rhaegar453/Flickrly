@@ -15,7 +15,9 @@ class GroupDetail extends React.Component {
     }
     render() {
         return (
-            <div className="container centeredCss">
+            <div className="container" style={{marginTop:'10px'}}>
+                {this.props.selectedGroup?<h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5>:null}
+                <div className="centeredCss">
                 {this.props.loading ? <h3>Loading...</h3> : <div className="row centeredCss">
                     {this.props.selectedGroupImages ? this.props.selectedGroupImages.map(item => (
                         <div className="blockImage flexer" style={{ backgroundImage: `url(${item.url})` }}>
@@ -23,6 +25,7 @@ class GroupDetail extends React.Component {
                         </div>
                     )) : null}
                 </div>}
+                </div>
             </div>
         );
     }
@@ -30,7 +33,8 @@ class GroupDetail extends React.Component {
 const mapStateToProps = (state) => {
     return {
         selectedGroupImages: state.selectedGroupImages,
-        loading: state.loading
+        loading: state.loading,
+        selectedGroup:state.selectedGroup
     }
 }
 
