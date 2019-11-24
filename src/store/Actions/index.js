@@ -1,7 +1,7 @@
 import * as actions from '../ActionTypes/index';
 
 export const searchGroup=(payload)=>({type:actions.SEARCH_GROUPS, payload:{payload}});
-export const searchGroupStart=()=>({type:actions.SEARCH_GROUPS_START});
+export const searchGroupStart=(data)=>({type:actions.SEARCH_GROUPS_START, payload:data.payload});
 export const searchGroupSuccess=(recommendations)=>({type:actions.SEARCH_GROUPS_SUCCESS,payload:recommendations});
 export const searchGroupFailure=(err)=>({type:actions.SEARCH_GROUPS_FAILURE, payload:err});
 

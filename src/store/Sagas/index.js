@@ -43,7 +43,7 @@ function* getGroups(action) {
 }
 function* searchGroups(action) {
     try {
-        yield put(searchGroupStart());
+        yield put(searchGroupStart(action.payload));
         console.log(action);
         let getGroupsUrl = `https://www.flickr.com/services/rest/?method=flickr.groups.search&api_key=2f3d9d105879101fe5df7e5c9718a1ad&text=${action.payload.payload}&per_page=6&format=json&nojsoncallback=1`;
         let data = yield axios.get(getGroupsUrl);

@@ -16,7 +16,7 @@ const initialState={
 const reducer=(state=initialState, action)=>{
     switch(action.type){
         case actions.SEARCH_GROUPS_START:
-            return {...state, loading:true}
+            return {...state, loading:true, searchQuery:action.payload}
         case actions.SEARCH_GROUPS_SUCCESS:
             return {...state, loading:false, groupRecommendations:action.payload};
         case actions.SEARCH_GROUPS_FAILURE:

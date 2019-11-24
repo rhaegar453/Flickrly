@@ -5,7 +5,7 @@ import RecommendationItem from './RecommendationItem';
 import { connect } from 'react-redux';
 import { searchGroup, getGroups } from '../store/Actions/index';
 import { withRouter } from 'react-router-dom';
-import {debounce} from 'lodash';
+import { debounce , throttle} from 'lodash';
 
 class SearchBox extends React.Component {
     constructor(props) {
@@ -17,18 +17,12 @@ class SearchBox extends React.Component {
             selectedGroup: {}
         }
     }
-    debounceEvent(...args){
-        this.debounceEvent=debounce(...args);
-        return e=>{
-            e.persist();
-            return this.debounceEvent(e);
-        }
-    }
-
-    changeInputText = debounce((text) => {
-        this.setState({ searchQuery:text, showRecommendations: true }, () => {
-            this.props.searchGroup(text);
-        })
+    changeInputText = (text) => {
+        this.setState({ searchQuery: text, showRecommendations: true });
+        this.makeCall();
+    };
+    makeCall=debounce(()=>{
+        this.props.searchGroup(this.state.searchQuery);
     }, 1000);
     createIconURL = ({ nsid, iconserver, iconfarm }) => {
         return `http://farm${iconfarm}.staticflickr.com/${iconserver}/buddyicons/${nsid}.jpg`
@@ -51,7 +45,7 @@ class SearchBox extends React.Component {
     render() {
         return (
             <div>
-                <input className="form-control inputBox"  placeholder="Search for Groups" onChange={(e)=>this.changeInputText(e.target.value)} onKeyPress={this.handleEnterButton}></input>
+                <input className="form-control inputBox" placeholder="Search for Groups" onChange={(e) => this.changeInputText(e.target.value)} onKeyPress={this.handleEnterButton}></input>
                 {this.props.groupRecommendations && this.state.showRecommendations && this.state.searchQuery != '' ? <div className='boxPosition'>
                     {this.props.groupRecommendations.map(item => (
                         <RecommendationItem key={item.name} onClick={() => this.selectItem(item)} icon={this.createIconURL(item)} text={item.name}></RecommendationItem>
@@ -65,7 +59,8 @@ class SearchBox extends React.Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.loading,
-        groupRecommendations: state.groupRecommendations
+        groupRecommendations: state.groupRecommendations,
+        searchQuery: state.searchQuery
     }
 }
 

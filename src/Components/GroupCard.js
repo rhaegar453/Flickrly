@@ -34,8 +34,7 @@ class GroupCard extends React.Component {
                     </div>
                     <div class="w-layout-grid grid-2">
                         {this.props.data.photos.map(item => (
-                            <div key={item}>
-                                {console.log(item)}
+                            <div key={item.id}>
                                 <img src={item.url} id="w-node-c2b4d253d288-b7e90bd6" width={"100%"} height="100px" style={{ objectFit: 'cover' }} onError={this.imageFallbackOnError} class="image-2"></img>
                             </div>
                         ))}
