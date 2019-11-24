@@ -8,9 +8,6 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import GroupComponent from './Components/GroupComponent';
 import GroupDetail from './Components/GroupDetail';
-import Chart from './Components/Chart';
-import ModalButton from './Components/ModalButton';
-import Modal from './Components/ModalComponent';
 
 class App extends React.Component {
   constructor(props) {

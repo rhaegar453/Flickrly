@@ -11,6 +11,7 @@ import rootSaga from './store/Sagas/index';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import GroupDetail from './Components/GroupDetail';
+import {cache} from './Middlewares/middleware';
 
 
 
@@ -18,7 +19,7 @@ import GroupDetail from './Components/GroupDetail';
 
 const sagaMiddleware = createSagaMiddleware();
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducer, composeEnhancers(applyMiddleware(sagaMiddleware)));
+const store = createStore(reducer, composeEnhancers(applyMiddleware(sagaMiddleware, cache)));
 
 sagaMiddleware.run(rootSaga);
 

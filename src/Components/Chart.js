@@ -12,14 +12,14 @@ export default class Chart extends React.Component {
         return (
             <div>
                 <BarChart
-                    width={500}
+                    width={400}
                     height={300}
                     data={this.props.data.map(item=>({name:item.name, Photos:parseInt(item.total)}))}
                     margin={{
                         top: 5, right: 30, left: 20, bottom: 5,
                     }}>
                     <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
+                    <XAxis dataKey="name"  />
                     <YAxis />
                     <Tooltip />
                     <Legend />

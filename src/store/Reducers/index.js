@@ -18,12 +18,14 @@ const reducer=(state=initialState, action)=>{
         case actions.SEARCH_GROUPS_START:
             return {...state, loading:true, searchQuery:action.payload}
         case actions.SEARCH_GROUPS_SUCCESS:
+            localStorage.setItem(state.searchQuery, JSON.stringify({search:{...action.payload}}));
             return {...state, loading:false, groupRecommendations:action.payload};
         case actions.SEARCH_GROUPS_FAILURE:
             return {...state, loading:false, error:action.payload}
         case actions.GET_GROUPS_START:
             return {...state, loading:true}
         case actions.GET_GROUPS_SUCCESS:
+            localStorage.setItem(state.searchQuery, JSON.stringify({get:{...action.payload}}));
             return {...state, loading:false, groups:action.payload}
         case actions.GET_GROUPS_FAILURE:
             return {...state, loading:false, error:action.payload }

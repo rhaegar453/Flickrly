@@ -3,7 +3,7 @@ import Item from './RecommendationItem';
 import './SearchBox.css';
 import RecommendationItem from './RecommendationItem';
 import { connect } from 'react-redux';
-import { searchGroup, getGroups } from '../store/Actions/index';
+import { searchGroup, getGroups,searchGroupCacheCheck, getGroupCacheCheck } from '../store/Actions/index';
 import { withRouter } from 'react-router-dom';
 import { debounce , throttle} from 'lodash';
 
@@ -34,7 +34,6 @@ class SearchBox extends React.Component {
         });
     }
     handleEnterButton = (e) => {
-        console.log(e.key);
         if (e.key == 'Enter') {
             this.props.getGroups(this.state.searchQuery);
             this.setState({ showRecommendations: false });
@@ -45,6 +44,7 @@ class SearchBox extends React.Component {
     render() {
         return (
             <div>
+                {console.log(this.props.groupRecommendations)}
                 <input className="form-control inputBox" value={this.state.searchQuery}  placeholder="Search for Groups" onChange={(e) => this.changeInputText(e.target.value)} onKeyPress={this.handleEnterButton}></input>
                 {this.props.groupRecommendations && this.state.showRecommendations && this.state.searchQuery != '' ? <div className='boxPosition'>
                     {this.props.groupRecommendations.map(item => (
@@ -66,8 +66,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        searchGroup: (query) => dispatch(searchGroup(query)),
-        getGroups: (query) => dispatch(getGroups(query))
+        searchGroup: (query) => dispatch(searchGroupCacheCheck(query)),
+        getGroups: (query) => dispatch(getGroupCacheCheck(query))
     }
 }
 

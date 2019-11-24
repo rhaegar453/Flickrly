@@ -24,18 +24,18 @@ class GroupCard extends React.Component {
     render() {
         return (
             <div onClick={this.handleClick}>
-                <div class="gridblock">
-                    <div class="div-block-6"><img style={{ borderRadius: '20px', marginTop: '20px' }} src={this.createIconURL(this.props.data)} onError={this.imageFallbackOnError} width="69" alt=""></img></div>
-                    <div class="div-block-7">
+                <div className="gridblock">
+                    <div className="div-block-6"><img style={{ borderRadius: '20px', marginTop: '20px' }} src={this.createIconURL(this.props.data)} onError={this.imageFallbackOnError} width="69" alt=""></img></div>
+                    <div className="div-block-7">
                         <h4 style={{ padding: '15px' }}>{this.props.data.name}</h4>
                     </div>
                     <div>
-                        <p class="paragraph">Members: {this.props.data.members}</p>
+                        <p className="paragraph">Members: {this.props.data.members}</p>
                     </div>
-                    <div class="w-layout-grid grid-2">
-                        {this.props.data.photos.map(item => (
+                    <div className="w-layout-grid grid-2">
+                        {this.props.data.photos&&this.props.data.photos.map(item => (
                             <div key={item.id}>
-                                <img src={item.url} id="w-node-c2b4d253d288-b7e90bd6" width={"100%"} height="100px" style={{ objectFit: 'cover' }} onError={this.imageFallbackOnError} class="image-2"></img>
+                                <img src={item.url} id="w-node-c2b4d253d288-b7e90bd6" width={"100%"} height="100px" style={{ objectFit: 'cover' }} onError={this.imageFallbackOnError} className="image-2"></img>
                             </div>
                         ))}
                     </div>
