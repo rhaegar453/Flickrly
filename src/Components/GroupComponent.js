@@ -3,6 +3,9 @@ import GroupCard from './GroupCard';
 import '../App.css';
 import { connect } from 'react-redux';
 import Search from './Search';
+import Chart from './Chart';
+import Modal from './ModalComponent';
+import ModalButton from './ModalButton';
 
 
 class GroupComponent extends React.Component {
@@ -17,14 +20,20 @@ class GroupComponent extends React.Component {
                         <Search />
                     </div>
                 </div>
-                {this.props.groups.length>0?                <div className="container marginate">
+                {this.props.groups.length > 0 ? <div className="container marginate">
                     <h1><u>Results</u></h1>
+                    <div className="centeredCss">
+                        <ModalButton id="Hello" name="View Chart" />
+                        <Modal modalID="Hello" title="First Modal">
+                            <Chart data={this.props.groups} />
+                        </Modal>
+                    </div>
                     <div className="w-layout-grid grid">
                         {this.props.groups.map(item => (
                             <GroupCard data={item} key={item.nsid}></GroupCard>
                         ))}
                     </div>
-                </div>:null}
+                </div> : null}
             </div>
         );
     }

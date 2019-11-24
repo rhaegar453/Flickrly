@@ -45,7 +45,7 @@ class SearchBox extends React.Component {
     render() {
         return (
             <div>
-                <input className="form-control inputBox" placeholder="Search for Groups" onChange={(e) => this.changeInputText(e.target.value)} onKeyPress={this.handleEnterButton}></input>
+                <input className="form-control inputBox" value={this.state.searchQuery}  placeholder="Search for Groups" onChange={(e) => this.changeInputText(e.target.value)} onKeyPress={this.handleEnterButton}></input>
                 {this.props.groupRecommendations && this.state.showRecommendations && this.state.searchQuery != '' ? <div className='boxPosition'>
                     {this.props.groupRecommendations.map(item => (
                         <RecommendationItem key={item.name} onClick={() => this.selectItem(item)} icon={this.createIconURL(item)} text={item.name}></RecommendationItem>

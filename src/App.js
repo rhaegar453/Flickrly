@@ -8,6 +8,9 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import GroupComponent from './Components/GroupComponent';
 import GroupDetail from './Components/GroupDetail';
+import Chart from './Components/Chart';
+import ModalButton from './Components/ModalButton';
+import Modal from './Components/ModalComponent';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,7 +21,7 @@ class App extends React.Component {
       <div className='fontCss'>
         <Navbar />
         <Switch>
-          <Route path="/gallery/:nsid"><GroupDetail/></Route>
+          <Route path="/gallery/:nsid"><GroupDetail /></Route>
           <Route path="/groups" exact={true}><GroupComponent /></Route>
         </Switch>
       </div>
@@ -28,7 +31,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    groups: state.groups
+    groups: state.groups 
   }
 }
 

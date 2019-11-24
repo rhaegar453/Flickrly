@@ -26,11 +26,12 @@ function* getGroups(action) {
             data.data.groups.group.map(async item => {
                 let getPhotosUrl = `https://www.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=2f3d9d105879101fe5df7e5c9718a1ad&group_id=${item.nsid}&per_page=8&format=json&nojsoncallback=1`;
                 let photoData = await axios.get(getPhotosUrl);
+                console.log(photoData);
                 let modified = await photoData.data.photos.photo.map(async item => {
                     return { url: createImageURL({ farmid: item.farm, serverid: item.server, id: item.id, secret: item.secret }), id: item.id };
                 });
                 let myData = await Promise.all(modified);
-                return { ...item, photos: myData };
+                return { ...item, photos: myData, total:photoData.data.photos.total};
             })
         );
         console.log(dataWithImages);
@@ -63,6 +64,8 @@ function* getImagesForGroupF(action) {
         let modified = yield all(groupData.photos.map(async item => {
             let photoInfoUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=2f3d9d105879101fe5df7e5c9718a1ad&photo_id=${item.id}&format=json&nojsoncallback=1`;
             let data = await axios.get(photoInfoUrl);
+            console.log("These are the groups");
+            console.log(item);
             return { title: data.data.photo.title._content, description: data.data.photo.description._content, url: createImageURL({ farmid: data.data.photo.farm, id: item.id, serverid: data.data.photo.server, secret: data.data.photo.secret }), comments: data.data.photo.comments._content, owner: data.data.photo.owner.username, views: data.data.photo.views, date: data.data.photo.dateuploaded };
         }));
         yield put(getImagesForGroupSuccess(modified));
