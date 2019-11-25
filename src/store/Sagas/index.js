@@ -1,4 +1,4 @@
-import { put, takeEvery, all, select } from 'redux-saga/effects';
+import { put, takeEvery, all, select, takeLatest } from 'redux-saga/effects';
 import * as actions from '../ActionTypes/index';
 import { getGroupFailure, getGroupStart, getGroupSuccess, searchGroupFailure, searchGroupStart, searchGroupSuccess, getImagesForGroup, getImagesForGroupStart, getImagesForGroupSuccess, getImagesForGroupFailure, loadMoreStart, loadMore, loadMoreSuccess, loadMoreFailure } from '../Actions/index';
 import axios from 'axios';
@@ -24,9 +24,11 @@ function* getGroups(action) {
         let data = yield axios.get(groupsURL);
         let dataWithImages = yield all(
             data.data.groups.group.map(async item => {
-                console.log(item);
                 let getPhotosUrl = `https://www.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=2f3d9d105879101fe5df7e5c9718a1ad&group_id=${item.nsid}&per_page=8&format=json&nojsoncallback=1`;
                 let photoData = await axios.get(getPhotosUrl);
+                if (photoData.data.code == 2) {
+                    return;
+                }
                 if (photoData.data.photos.photo.length == 0) {
                     return { ...item, photos: [], total: 0 };
                 }
@@ -35,16 +37,17 @@ function* getGroups(action) {
                         return { url: createImageURL({ farmid: item.farm, serverid: item.server, id: item.id, secret: item.secret }), id: item.id };
                     });
                     let myData = await Promise.all(modified);
-                    return { ...item, photos: myData, total: photoData.data.photos.total };
+                    let myDataMod=myData.filter(item=>item);
+                    return { ...item, photos: myDataMod, total: photoData.data.photos.total };
                 }
             })
         );
 
         let resolvedData = yield Promise.all(dataWithImages);
-        yield put(getGroupSuccess(resolvedData, action.payload));
+        let mod=resolvedData.filter(item=>item);
+        yield put(getGroupSuccess(mod, action.payload));
     }
     catch (err) {
-        console.log(err);
         yield put(getGroupFailure(err));
     }
 }
@@ -60,7 +63,6 @@ function* searchGroups(action) {
         yield put(searchGroupSuccess(recommendations, action.payload.payload));
     }
     catch (err) {
-        console.log(err);
         yield put(searchGroupFailure(err));
     }
 }
@@ -120,7 +122,7 @@ function* watchActions() {
     yield takeEvery(actions.GET_GROUPS, getGroups);
     yield takeEvery(actions.SEARCH_GROUPS, searchGroups);
     yield takeEvery(actions.GET_IMAGES_FOR_GROUP, getImagesForGroupF)
-    yield takeEvery(actions.LOAD_MORE, loadMoreData)
+    yield takeLatest(actions.LOAD_MORE, loadMoreData)
 }
 
 

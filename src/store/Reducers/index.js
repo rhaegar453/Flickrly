@@ -10,7 +10,8 @@ const initialState = {
     selectedGroupImages: null,
     loading: false,
     selectedGroupWithInfo: null, 
-    currentPage:1
+    currentPage:1, 
+    scrolling:false
 }
 
 const addToSessionStorage = (action, key, value) => {
@@ -69,7 +70,6 @@ const reducer = (state = initialState, action) => {
             return { ...state, loading: true }
         case actions.GET_GROUPS_SUCCESS:
             if (action.text) {
-                /*sessionStorage.setItem(action.text, JSON.stringify({ get: { ...action.payload } })); */
                 addToSessionStorage('get', action.text.payload, JSON.stringify(action.payload));
             }
             return { ...state, loading: false, groups: action.payload }
@@ -81,14 +81,16 @@ const reducer = (state = initialState, action) => {
             return { ...state, loading: true }
         case actions.GET_IMAGES_FOR_GROUP_SUCCESS:
             localStorage.setItem(action.text, JSON.stringify(action.payload));
-            return { ...state, selectedGroupImages: action.payload, loading: false }
+            return {...state, selectedGroupImages: action.payload, loading: false }
         case actions.LOAD_MORE_SUCCESS:
             console.log(action);
             let filteredData=action.payload.data.filter(item=>item);
             let sessionData=JSON.parse(sessionStorage.getItem(action.payload.text));
             let newData={...sessionData, get:[...state.groups, ...filteredData]};
             sessionStorage.setItem(action.payload.text, JSON.stringify(newData));
-            return {...state, currentPage:action.payload.page, groups:[...state.groups, ...filteredData]};
+            return {...state, currentPage:action.payload.page, groups:[...state.groups, ...filteredData], scrolling:false};
+        case actions.LOAD_MORE_START:
+            return {...state, scrolling:true};
         default:
             return { ...state };
     }

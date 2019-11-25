@@ -14,7 +14,11 @@ export default class Chart extends React.Component {
                 <BarChart
                     width={400}
                     height={300}
-                    data={this.props.data.map(item=>({name:item.name, Photos:parseInt(item.total)}))}
+                    data={this.props.data.map(item=>{
+                        if(item){
+                            return{name:item.name, Photos:parseInt(item.total)}
+                        }
+                    })}
                     margin={{
                         top: 5, right: 30, left: 20, bottom: 5,
                     }}>
