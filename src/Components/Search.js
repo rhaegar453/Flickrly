@@ -23,7 +23,7 @@ class SearchBox extends React.Component {
     };
     makeCall=debounce(()=>{
         this.props.searchGroup(this.state.searchQuery);
-    }, 1000);
+    }, 500);
     createIconURL = ({ nsid, iconserver, iconfarm }) => {
         return `http://farm${iconfarm}.staticflickr.com/${iconserver}/buddyicons/${nsid}.jpg`
     }

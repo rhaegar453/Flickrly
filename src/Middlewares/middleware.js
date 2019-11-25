@@ -39,12 +39,12 @@ export const cache=({getState, dispatch})=>next=>action=>{
     if(action.type=='SEARCH_GROUPS_CHECK_CACHE'){
         console.log("Checking inside cache");
         let {searchQuery}=getState();
-        let sessionData=JSON.parse(localStorage.getItem(action.payload));
+        let sessionData=JSON.parse(sessionStorage.getItem(action.payload));
         if(sessionData&&sessionData.search){
             console.log("Taking from the cache");
             let data=Object.keys(sessionData.search).map(item=>sessionData.search[item]);
             console.log(data);
-            dispatch(searchGroupSuccess(data));
+            dispatch(searchGroupSuccess(data, action.payload));
         }
         else{
             console.log('Not found in cache');
