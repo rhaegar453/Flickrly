@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import GroupComponent from './Components/GroupComponent';
 import GroupDetail from './Components/GroupDetail';
+import OverviewPage from './Components/OverviewPage';
 
 class App extends React.Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/gallery/:nsid"><GroupDetail /></Route>
           <Route path="/groups" exact={true}><GroupComponent /></Route>
+          <Route path="/overview/:nsid" exact={true}><OverviewPage/></Route>
         </Switch>
       </div>
     );

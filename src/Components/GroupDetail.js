@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './SearchBox.css';
-import { getImagesForGroup } from '../store/Actions/index';
+import { getImagesForGroup, getImagesForGroupCache } from '../store/Actions/index';
 import StaggeredCard from './StaggeredCard';
 import DetailComponent from './DetailComponent';
 
@@ -11,7 +11,10 @@ class GroupDetail extends React.Component {
         super(props);
     }
     componentDidMount() {
-        this.props.getImagesForGroup();
+        console.log("Mounting the component now");
+        let data=this.props.history.location.pathname.split('/');
+        let nsid=data[data.length-1];
+        this.props.getImagesForGroup(nsid);
     }
     render() {
         return (
@@ -40,7 +43,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getImagesForGroup: () => dispatch(getImagesForGroup())
+        getImagesForGroup: (data) => dispatch(getImagesForGroupCache(data))
     }
 }
 

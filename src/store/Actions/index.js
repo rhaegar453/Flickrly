@@ -15,8 +15,12 @@ export const getGroupCacheCheck=(payload)=>({type:actions.GET_GROUPS_CHECK_CACHE
 
 export const getImagesForGroup=(payload)=>({type:actions.GET_IMAGES_FOR_GROUP, payload:payload});
 export const getImagesForGroupStart=()=>({type:actions.GET_IMAGES_FOR_GROUP_START});
-export const getImagesForGroupSuccess=(data)=>({type:actions.GET_IMAGES_FOR_GROUP_SUCCESS, payload:data});
+export const getImagesForGroupSuccess=(data, text)=>({type:actions.GET_IMAGES_FOR_GROUP_SUCCESS, payload:data, text});
 export const getImagesForGroupFailure=(err)=>({type:actions.GET_IMAGES_FOR_GROUP_FAILURE});
+export const getImagesForGroupCache=(key)=>{
+    console.log("Dispatching the cache selection option");
+    return {type:actions.GET_IMAGES_FOR_GROUP_CACHE, payload:key}
+};
 
 export const selectGroup=(groupDetails)=>({type:actions.SELECT_GROUP, payload:groupDetails});
 

@@ -16,10 +16,8 @@ const addToSessionStorage = (action, key, value) => {
     if (key == undefined) {
         return;
     }
-    console.log("I am in here");
-    console.log(value);
+
     let data = JSON.parse(sessionStorage.getItem(key));
-    console.log(data);
     if (action == 'search') {
         if (data == null) {
             let searchData = JSON.parse(value);
@@ -29,11 +27,8 @@ const addToSessionStorage = (action, key, value) => {
         if (data.get) {
             let newData = {};
             let searchData = JSON.parse(value);
-            console.log("Getting ready to put search data", newData);
-            console.log(newData);
             newData.get = data.get;
             newData.search = searchData;
-            console.log(newData);
             sessionStorage.setItem(key, JSON.stringify(newData));
             return;
         }
@@ -47,10 +42,8 @@ const addToSessionStorage = (action, key, value) => {
         if (data.search) {
             let newData = {};
             let getData = JSON.parse(value);
-            console.log("Getting ready to put get data", newData);
             newData.search = data.search;
             newData.get = getData;
-            console.log(newData);
             sessionStorage.setItem(key, JSON.stringify(newData));
             return;
         }
@@ -86,6 +79,7 @@ const reducer = (state = initialState, action) => {
         case actions.GET_IMAGES_FOR_GROUP_START:
             return { ...state, loading: true }
         case actions.GET_IMAGES_FOR_GROUP_SUCCESS:
+            localStorage.setItem(action.text, JSON.stringify(action.payload));
             return { ...state, selectedGroupImages: action.payload, loading: false }
         default:
             return { ...state };

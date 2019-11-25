@@ -1,8 +1,7 @@
-import { getGroupSuccess, searchGroupSuccess, getGroups, searchGroup } from '../store/Actions/index';
+import { getGroupSuccess, searchGroupSuccess, getGroups, searchGroup, getImagesForGroup, getImagesForGroupSuccess } from '../store/Actions/index';
 import * as actions from '../store/ActionTypes/index';
 
 export const cache = ({ getState, dispatch }) => next => action => {
-    next(action);
 
     if (action.type == 'SEARCH_GROUPS_CHECK_CACHE') {
         let { searchQuery } = getState();
@@ -15,7 +14,7 @@ export const cache = ({ getState, dispatch }) => next => action => {
             dispatch(searchGroup(action.payload));
         }
     }
-    if (action.type == actions.GET_GROUPS_CHECK_CACHE) {
+    else if (action.type == actions.GET_GROUPS_CHECK_CACHE) {
         let sessionData = JSON.parse(sessionStorage.getItem(action.payload));
         if (sessionData && sessionData.get) {
             let data = Object.keys(sessionData.get).map(item => sessionData.get[item]);
@@ -24,6 +23,20 @@ export const cache = ({ getState, dispatch }) => next => action => {
         else {
             dispatch(getGroups(action.payload));
         }
+    }
+    else if(action.type==actions.GET_IMAGES_FOR_GROUP_CACHE){
+        console.log("Inside of the cache");
+        console.log(action);
+        let localData=JSON.parse(localStorage.getItem(action.payload));
+        if(localData){
+            dispatch(getImagesForGroupSuccess(localData, action.payload));
+        }
+        else{
+            dispatch(getImagesForGroup(action.payload));
+        }
+    }
+    else{
+        next(action);
     }
 
 }

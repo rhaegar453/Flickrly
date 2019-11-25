@@ -65,6 +65,8 @@ function* searchGroups(action) {
 }
 function* getImagesForGroupF(action) {
     try {
+        console.log("Get images for group")
+        console.log(action);
         yield put(getImagesForGroupStart());
         let groupData = yield select((state) => state.selectedGroup);
         let modified = yield all(groupData.photos.map(async item => {
@@ -72,7 +74,7 @@ function* getImagesForGroupF(action) {
             let data = await axios.get(photoInfoUrl);
             return { title: data.data.photo.title._content, description: data.data.photo.description._content, url: createImageURL({ farmid: data.data.photo.farm, id: item.id, serverid: data.data.photo.server, secret: data.data.photo.secret }), comments: data.data.photo.comments._content, owner: data.data.photo.owner.username, views: data.data.photo.views, date: data.data.photo.dateuploaded };
         }));
-        yield put(getImagesForGroupSuccess(modified));
+        yield put(getImagesForGroupSuccess(modified, action.payload));
     }
     catch (err) {
         yield put(getImagesForGroupFailure());

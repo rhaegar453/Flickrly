@@ -1,7 +1,7 @@
 import React from 'react';
 import '../App.css';
 import { connect } from 'react-redux';
-import { selectGroup , getImagesForGroup} from '../store/Actions/index';
+import { selectGroup , getImagesForGroup, getImagesForGroupCache} from '../store/Actions/index';
 import { withRouter } from 'react-router-dom';
 
 class GroupCard extends React.Component {
@@ -14,11 +14,13 @@ class GroupCard extends React.Component {
     }
     handleClick = () => {
         this.props.selectGroup(this.props.data);
-/*         this.props.getImagesForGroup(this.props.data); */
         this.props.history.push(`/gallery/${this.props.data.nsid}`);
     }
     imageFallbackOnError = (e) => {
         e.target.src = `http://icons.iconarchive.com/icons/bokehlicia/pacifica/256/flickr-icon.png`
+    }
+    goToOverview=(nsid)=>{
+        this.props.history.push(`/overview/${nsid}`);
     }
 
     render() {
@@ -34,7 +36,7 @@ class GroupCard extends React.Component {
                     </div>
                     <div className="w-layout-grid grid-2">
                         {this.props.data.photos&&this.props.data.photos.map(item => (
-                            <div key={item.id}>
+                            <div key={item.id} onClick={()=>this.goToOverview(this.props.data.nsid)}>
                                 <img src={item.url} id="w-node-c2b4d253d288-b7e90bd6" width={"100%"} height="100px" style={{ objectFit: 'cover' }} onError={this.imageFallbackOnError} className="image-2"></img>
                             </div>
                         ))}
