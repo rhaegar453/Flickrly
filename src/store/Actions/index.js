@@ -17,10 +17,13 @@ export const getImagesForGroup=(payload)=>({type:actions.GET_IMAGES_FOR_GROUP, p
 export const getImagesForGroupStart=()=>({type:actions.GET_IMAGES_FOR_GROUP_START});
 export const getImagesForGroupSuccess=(data, text)=>({type:actions.GET_IMAGES_FOR_GROUP_SUCCESS, payload:data, text});
 export const getImagesForGroupFailure=(err)=>({type:actions.GET_IMAGES_FOR_GROUP_FAILURE});
-export const getImagesForGroupCache=(key)=>{
-    console.log("Dispatching the cache selection option");
-    return {type:actions.GET_IMAGES_FOR_GROUP_CACHE, payload:key}
-};
+export const getImagesForGroupCache=(key)=>({type:actions.GET_IMAGES_FOR_GROUP_CACHE, payload:key});
+
+export const loadMore=(pageNumber, text)=>({type:actions.LOAD_MORE, payload:{pageNumber, text}});
+export const loadMoreStart=()=>({type:actions.LOAD_MORE_START});
+export const loadMoreSuccess=(data)=>({type:actions.LOAD_MORE_SUCCESS, payload:data});
+export const loadMoreFailure=(err)=>({type:actions.LOAD_MORE_FAILURE, payload:err});
+
 
 export const selectGroup=(groupDetails)=>({type:actions.SELECT_GROUP, payload:groupDetails});
 

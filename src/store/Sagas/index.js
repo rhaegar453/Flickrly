@@ -1,6 +1,6 @@
 import { put, takeEvery, all, select } from 'redux-saga/effects';
 import * as actions from '../ActionTypes/index';
-import { getGroupFailure, getGroupStart, getGroupSuccess, searchGroupFailure, searchGroupStart, searchGroupSuccess, getImagesForGroup, getImagesForGroupStart, getImagesForGroupSuccess, getImagesForGroupFailure } from '../Actions/index';
+import { getGroupFailure, getGroupStart, getGroupSuccess, searchGroupFailure, searchGroupStart, searchGroupSuccess, getImagesForGroup, getImagesForGroupStart, getImagesForGroupSuccess, getImagesForGroupFailure, loadMoreStart, loadMore, loadMoreSuccess, loadMoreFailure } from '../Actions/index';
 import axios from 'axios';
 
 
@@ -24,6 +24,7 @@ function* getGroups(action) {
         let data = yield axios.get(groupsURL);
         let dataWithImages = yield all(
             data.data.groups.group.map(async item => {
+                console.log(item);
                 let getPhotosUrl = `https://www.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=2f3d9d105879101fe5df7e5c9718a1ad&group_id=${item.nsid}&per_page=8&format=json&nojsoncallback=1`;
                 let photoData = await axios.get(getPhotosUrl);
                 if (photoData.data.photos.photo.length == 0) {
@@ -65,8 +66,6 @@ function* searchGroups(action) {
 }
 function* getImagesForGroupF(action) {
     try {
-        console.log("Get images for group")
-        console.log(action);
         yield put(getImagesForGroupStart());
         let groupData = yield select((state) => state.selectedGroup);
         let modified = yield all(groupData.photos.map(async item => {
@@ -81,11 +80,54 @@ function* getImagesForGroupF(action) {
     }
 }
 
+
+function* loadMoreData(action) {
+    try {
+        yield put(loadMoreStart());
+        let groupLoadMoreUrl = `https://www.flickr.com/services/rest/?method=flickr.groups.search&api_key=2f3d9d105879101fe5df7e5c9718a1ad&text=${action.payload.text}&per_page=10&page=${action.payload.pageNumber}&format=json&nojsoncallback=1`;
+        let data = yield axios.get(groupLoadMoreUrl);
+        let dataWithImages = yield all(
+            data.data.groups.group.map(async item => {
+                let getPhotosUrl = `https://www.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=2f3d9d105879101fe5df7e5c9718a1ad&group_id=${item.nsid}&per_page=8&format=json&nojsoncallback=1`;
+                var photoData = await axios.get(getPhotosUrl);
+                if (photoData.data.code == 2) {
+                    return;
+                }
+                if (photoData.data.photos.photo.length == 0) {
+                    return { ...item, photos: [], total: 0 };
+                }
+                else {
+                    let modified = await photoData.data.photos.photo.map(async item => {
+                        return { url: createImageURL({ farmid: item.farm, serverid: item.server, id: item.id, secret: item.secret }), id: item.id };
+                    });
+                    let myData = await Promise.all(modified);
+                    return { ...item, photos: myData, total: photoData.data.photos.total };
+                }
+            })
+        );
+
+        let resolvedData = yield Promise.all(dataWithImages);
+        console.log(resolvedData);
+        yield put(loadMoreSuccess({ data: resolvedData, text: action.payload.text, page:action.payload.pageNumber}));
+    }
+    catch (err) {
+        console.log(err);
+        yield put(loadMoreFailure(err));
+    }
+}
+
 function* watchActions() {
     yield takeEvery(actions.GET_GROUPS, getGroups);
     yield takeEvery(actions.SEARCH_GROUPS, searchGroups);
     yield takeEvery(actions.GET_IMAGES_FOR_GROUP, getImagesForGroupF)
+    yield takeEvery(actions.LOAD_MORE, loadMoreData)
 }
+
+
+
+
+
+
 
 export default function* rootSaga() {
     yield all([

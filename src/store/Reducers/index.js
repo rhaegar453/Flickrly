@@ -9,7 +9,8 @@ const initialState = {
     selectedGroup: null,
     selectedGroupImages: null,
     loading: false,
-    selectedGroupWithInfo: null
+    selectedGroupWithInfo: null, 
+    currentPage:1
 }
 
 const addToSessionStorage = (action, key, value) => {
@@ -81,6 +82,10 @@ const reducer = (state = initialState, action) => {
         case actions.GET_IMAGES_FOR_GROUP_SUCCESS:
             localStorage.setItem(action.text, JSON.stringify(action.payload));
             return { ...state, selectedGroupImages: action.payload, loading: false }
+        case actions.LOAD_MORE_SUCCESS:
+            console.log(action);
+            let filteredData=action.payload.data.filter(item=>item);
+            return {...state, currentPage:action.payload.page, groups:[...state.groups, ...filteredData]};
         default:
             return { ...state };
     }
