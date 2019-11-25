@@ -25,5 +25,13 @@ export const loadMoreSuccess=(data)=>({type:actions.LOAD_MORE_SUCCESS, payload:d
 export const loadMoreFailure=(err)=>({type:actions.LOAD_MORE_FAILURE, payload:err});
 
 
+export const loadMoreImages=(data, page)=>({type:actions.LOAD_MORE_IMAGES, payload:data, page});
+export const loadMoreImagesSuccess=(data)=>{
+    console.log(data);
+    return{type:actions.LOAD_MORE_IMAGES_SUCCESS, payload:data}
+};
+export const loadMoreImagesFailure=()=>({type:actions.LOAD_MORE_IMAGES_FAILURE});
+export const loadMoreImagesStart=()=>({type:actions.LOAD_MORE_IMAGES_START});
+
 export const selectGroup=(groupDetails)=>({type:actions.SELECT_GROUP, payload:groupDetails});
 

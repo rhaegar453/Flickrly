@@ -1,6 +1,6 @@
 import { put, takeEvery, all, select, takeLatest } from 'redux-saga/effects';
 import * as actions from '../ActionTypes/index';
-import { getGroupFailure, getGroupStart, getGroupSuccess, searchGroupFailure, searchGroupStart, searchGroupSuccess, getImagesForGroup, getImagesForGroupStart, getImagesForGroupSuccess, getImagesForGroupFailure, loadMoreStart, loadMore, loadMoreSuccess, loadMoreFailure } from '../Actions/index';
+import { getGroupFailure, getGroupStart, getGroupSuccess, searchGroupFailure, searchGroupStart, searchGroupSuccess, getImagesForGroup, getImagesForGroupStart, getImagesForGroupSuccess, getImagesForGroupFailure, loadMoreStart, loadMore, loadMoreSuccess, loadMoreFailure, loadMoreImages, loadMoreImagesStart, loadMoreImagesSuccess } from '../Actions/index';
 import axios from 'axios';
 
 
@@ -118,11 +118,35 @@ function* loadMoreData(action) {
     }
 }
 
+function* loadMoreImagesF(action){
+    try{
+        console.log(action);
+        yield put(loadMoreImagesStart());
+        let loadMoreUrl=`https://www.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=2f3d9d105879101fe5df7e5c9718a1ad&group_id=${action.payload}&per_page=10&page=${action.page}&format=json&nojsoncallback=1`;
+        console.log(loadMoreUrl);
+        let data=yield axios.get(loadMoreUrl);
+        if(data.data.photos.photo.length==0){
+            return;
+        }
+        let modified = yield all(data.data.photos.photo.map(async item => {
+            let photoInfoUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=2f3d9d105879101fe5df7e5c9718a1ad&photo_id=${item.id}&format=json&nojsoncallback=1`;
+            let data = await axios.get(photoInfoUrl);
+            return { title: data.data.photo.title._content, description: data.data.photo.description._content, url: createImageURL({ farmid: data.data.photo.farm, id: item.id, serverid: data.data.photo.server, secret: data.data.photo.secret }), comments: data.data.photo.comments._content, owner: data.data.photo.owner.username, views: data.data.photo.views, date: data.data.photo.dateuploaded };
+        }));
+        console.log(modified);
+        yield put(loadMoreImagesSuccess({photos:modified, nsid:action.payload}));
+    }
+    catch(err){
+
+    }
+}
+
 function* watchActions() {
     yield takeEvery(actions.GET_GROUPS, getGroups);
     yield takeEvery(actions.SEARCH_GROUPS, searchGroups);
     yield takeEvery(actions.GET_IMAGES_FOR_GROUP, getImagesForGroupF)
-    yield takeLatest(actions.LOAD_MORE, loadMoreData)
+    yield takeLatest(actions.LOAD_MORE, loadMoreData);
+    yield takeLatest(actions.LOAD_MORE_IMAGES, loadMoreImagesF)
 }
 
 

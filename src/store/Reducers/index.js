@@ -1,4 +1,5 @@
 import * as actions from '../ActionTypes/index';
+import {uniqBy} from 'lodash';
 
 const initialState = {
     searchQuery: '',
@@ -53,6 +54,7 @@ const addToSessionStorage = (action, key, value) => {
 }
 
 
+
 const reducer = (state = initialState, action) => {
     switch (action.type) {
         case actions.SEARCH_GROUPS_START:
@@ -83,7 +85,6 @@ const reducer = (state = initialState, action) => {
             localStorage.setItem(action.text, JSON.stringify(action.payload));
             return {...state, selectedGroupImages: action.payload, loading: false }
         case actions.LOAD_MORE_SUCCESS:
-            console.log(action);
             let filteredData=action.payload.data.filter(item=>item);
             let sessionData=JSON.parse(sessionStorage.getItem(action.payload.text));
             let newData={...sessionData, get:[...state.groups, ...filteredData]};
@@ -91,6 +92,11 @@ const reducer = (state = initialState, action) => {
             return {...state, currentPage:action.payload.page, groups:[...state.groups, ...filteredData], scrolling:false};
         case actions.LOAD_MORE_START:
             return {...state, scrolling:true};
+        case actions.LOAD_MORE_IMAGES_START:
+            return {...state, scrolling:true};
+        case actions.LOAD_MORE_IMAGES_SUCCESS:
+            console.log(action);
+            return {...state, scrolling:false, selectedGroupImages:[...state.selectedGroupImages, ...action.payload.photos]};
         default:
             return { ...state };
     }

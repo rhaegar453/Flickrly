@@ -25,7 +25,7 @@ class GroupCard extends React.Component {
 
     render() {
         return (
-            <div onClick={this.handleClick}>
+            <div onClick={this.handleClick} >
                 <div className="gridblock">
                     <div className="div-block-6"><img style={{ borderRadius: '20px', marginTop: '20px' }} src={this.createIconURL(this.props.data)} onError={this.imageFallbackOnError} width="69" alt=""></img></div>
                     <div className="div-block-7">
@@ -36,7 +36,7 @@ class GroupCard extends React.Component {
                     </div>
                     <div className="w-layout-grid grid-2">
                         {this.props.data.photos&&this.props.data.photos.map(item => (
-                            <div key={item.id} onClick={()=>this.goToOverview(this.props.data.nsid)}>
+                            <div key={item.id}>
                                 <img src={item.url} id="w-node-c2b4d253d288-b7e90bd6" width={"100%"} height="100px" style={{ objectFit: 'cover' }} onError={this.imageFallbackOnError} className="image-2"></img>
                             </div>
                         ))}
