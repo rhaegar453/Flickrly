@@ -85,6 +85,9 @@ const reducer = (state = initialState, action) => {
         case actions.LOAD_MORE_SUCCESS:
             console.log(action);
             let filteredData=action.payload.data.filter(item=>item);
+            let sessionData=JSON.parse(sessionStorage.getItem(action.payload.text));
+            let newData={...sessionData, get:[...state.groups, ...filteredData]};
+            sessionStorage.setItem(action.payload.text, JSON.stringify(newData));
             return {...state, currentPage:action.payload.page, groups:[...state.groups, ...filteredData]};
         default:
             return { ...state };
