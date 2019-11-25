@@ -53,6 +53,13 @@ const addToSessionStorage = (action, key, value) => {
     }
 }
 
+const persistInLocalStorage=(arr, key)=>{
+    let localData=JSON.parse(localStorage.getItem(key));
+    let totalData=[...arr, ...localData];
+    let newData=uniqBy(totalData, (e)=>e.url);
+    console.log(newData);
+    localStorage.setItem(key, JSON.stringify(newData));
+}
 
 
 const reducer = (state = initialState, action) => {
@@ -96,9 +103,10 @@ const reducer = (state = initialState, action) => {
             return {...state, scrolling:true};
         case actions.LOAD_MORE_IMAGES_SUCCESS:
             console.log(action);
+            persistInLocalStorage([...action.payload.photos], action.payload.nsid);
             return {...state, scrolling:false, selectedGroupImages:[...state.selectedGroupImages, ...action.payload.photos]};
         default:
-            return { ...state };
+            return {...state };
     }
 }
 
