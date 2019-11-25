@@ -9,7 +9,7 @@ export const searchGroupCacheCheck=(payload)=>({type:actions.SEARCH_GROUPS_CHECK
 
 export const getGroups=(payload)=>({type:actions.GET_GROUPS, payload:{payload}})
 export const getGroupStart=()=>({type:actions.GET_GROUPS_START});
-export const getGroupSuccess=(data)=>({type:actions.GET_GROUPS_SUCCESS, payload:data});
+export const getGroupSuccess=(data, searchText)=>({type:actions.GET_GROUPS_SUCCESS, payload:data, text:searchText});
 export const getGroupFailure=(err)=>({type:actions.GET_GROUPS_FAILURE, payload:err});
 export const getGroupCacheCheck=(payload)=>({type:actions.GET_GROUPS_CHECK_CACHE, payload})
 

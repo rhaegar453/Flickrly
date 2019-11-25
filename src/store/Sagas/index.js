@@ -26,19 +26,24 @@ function* getGroups(action) {
             data.data.groups.group.map(async item => {
                 let getPhotosUrl = `https://www.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=2f3d9d105879101fe5df7e5c9718a1ad&group_id=${item.nsid}&per_page=8&format=json&nojsoncallback=1`;
                 let photoData = await axios.get(getPhotosUrl);
-
-                let modified = await photoData.data.photos.photo.map(async item => {
-                    return { url: createImageURL({ farmid: item.farm, serverid: item.server, id: item.id, secret: item.secret }), id: item.id };
-                });
-                let myData = await Promise.all(modified);
-                return { ...item, photos: myData, total:photoData.data.photos.total};
+                if (photoData.data.photos.photo.length == 0) {
+                    return { ...item, photos: [], total: 0 };
+                }
+                else {
+                    let modified = await photoData.data.photos.photo.map(async item => {
+                        return { url: createImageURL({ farmid: item.farm, serverid: item.server, id: item.id, secret: item.secret }), id: item.id };
+                    });
+                    let myData = await Promise.all(modified);
+                    return { ...item, photos: myData, total: photoData.data.photos.total };
+                }
             })
         );
 
         let resolvedData = yield Promise.all(dataWithImages);
-        yield put(getGroupSuccess(resolvedData));
+        yield put(getGroupSuccess(resolvedData, action.payload));
     }
     catch (err) {
+        console.log(err);
         yield put(getGroupFailure(err));
     }
 }
@@ -51,9 +56,10 @@ function* searchGroups(action) {
         let recommendations = data.data.groups.group.map(item => {
             return { name: item.name, nsid: item.nsid, iconserver: item.iconserver, iconfarm: item.iconfarm }
         });
-        yield put(searchGroupSuccess(recommendations));
+        yield put(searchGroupSuccess(recommendations, action.payload.payload));
     }
     catch (err) {
+        console.log(err);
         yield put(searchGroupFailure(err));
     }
 }
