@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import GroupComponent from './Components/GroupComponent';
 import GroupDetail from './Components/GroupDetail';
+import HomePage from './Components/HomePage';
 import OverviewPage from './Components/OverviewPage';
 
 class App extends React.Component {
@@ -19,6 +20,7 @@ class App extends React.Component {
       <div className='fontCss'>
         <Navbar />
         <Switch>
+          <Route path="/" exact={true}><HomePage/></Route>
           <Route path="/gallery/:nsid"><GroupDetail /></Route>
           <Route path="/groups" exact={true}><GroupComponent /></Route>
           <Route path="/overview/:nsid" exact={true}><OverviewPage /></Route>
