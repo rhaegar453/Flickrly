@@ -6,6 +6,7 @@ import { getImagesForGroup, getImagesForGroupCache , loadMoreImages} from '../st
 import StaggeredCard from './StaggeredCard';
 import DetailComponent from './DetailComponent';
 import Scroller from 'react-bottom-scroll-listener';
+import {SpinLoader} from 'react-css-loaders';
 
 
 class GroupDetail extends React.Component {
@@ -45,6 +46,9 @@ class GroupDetail extends React.Component {
                                     <DetailComponent data={item} />
                                 </div>
                             )) : null}
+                            <div>
+                                {this.props.scrolling?<SpinLoader/>:null}
+                            </div>
                         </div>}
                     </div>
                 </Scroller>
@@ -56,7 +60,8 @@ const mapStateToProps = (state) => {
     return {
         selectedGroupImages: state.selectedGroupImages,
         loading: state.loading,
-        selectedGroup: state.selectedGroup
+        selectedGroup: state.selectedGroup, 
+        scrolling:state.scrolling
     }
 }
 
