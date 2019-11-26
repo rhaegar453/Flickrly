@@ -73,7 +73,8 @@ function* getImagesForGroupF(action) {
         let modified = yield all(groupData.photos.map(async item => {
             let photoInfoUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=2f3d9d105879101fe5df7e5c9718a1ad&photo_id=${item.id}&format=json&nojsoncallback=1`;
             let data = await axios.get(photoInfoUrl);
-            return { title: data.data.photo.title._content, description: data.data.photo.description._content, url: createImageURL({ farmid: data.data.photo.farm, id: item.id, serverid: data.data.photo.server, secret: data.data.photo.secret }), comments: data.data.photo.comments._content, owner: data.data.photo.owner.username, views: data.data.photo.views, date: data.data.photo.dateuploaded };
+            console.log(data.data)
+            return { title: data.data.photo.title._content, description: data.data.photo.description._content,likes:parseInt(data.data.photo.isfavorite),  url: createImageURL({ farmid: data.data.photo.farm, id: item.id, serverid: data.data.photo.server, secret: data.data.photo.secret }), comments: data.data.photo.comments._content, owner: data.data.photo.owner.username, views: data.data.photo.views, date: data.data.photo.dateuploaded };
         }));
         yield put(getImagesForGroupSuccess(modified, action.payload));
     }
@@ -131,7 +132,8 @@ function* loadMoreImagesF(action){
         let modified = yield all(data.data.photos.photo.map(async item => {
             let photoInfoUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=2f3d9d105879101fe5df7e5c9718a1ad&photo_id=${item.id}&format=json&nojsoncallback=1`;
             let data = await axios.get(photoInfoUrl);
-            return { title: data.data.photo.title._content, description: data.data.photo.description._content, url: createImageURL({ farmid: data.data.photo.farm, id: item.id, serverid: data.data.photo.server, secret: data.data.photo.secret }), comments: data.data.photo.comments._content, owner: data.data.photo.owner.username, views: data.data.photo.views, date: data.data.photo.dateuploaded };
+            console.log(data.data)
+            return { title: data.data.photo.title._content, description: data.data.photo.description._content,likes:parseInt(data.data.photo.isfavorite), url: createImageURL({ farmid: data.data.photo.farm, id: item.id, serverid: data.data.photo.server, secret: data.data.photo.secret }), comments: data.data.photo.comments._content, owner: data.data.photo.owner.username, views: data.data.photo.views, date: data.data.photo.dateuploaded };
         }));
         console.log(modified);
         yield put(loadMoreImagesSuccess({photos:modified, nsid:action.payload}));

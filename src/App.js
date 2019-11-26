@@ -21,7 +21,7 @@ class App extends React.Component {
         <Switch>
           <Route path="/gallery/:nsid"><GroupDetail /></Route>
           <Route path="/groups" exact={true}><GroupComponent /></Route>
-          <Route path="/overview/:nsid" exact={true}><OverviewPage/></Route>
+          <Route path="/overview/:nsid" exact={true}><OverviewPage /></Route>
         </Switch>
       </div>
     );

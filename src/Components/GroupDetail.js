@@ -24,7 +24,7 @@ class GroupDetail extends React.Component {
     navigateToOverview = (item) => {
         let data = this.props.history.location.pathname.split('/');
         let nsid = data[data.length - 1];
-        this.props.history.push(`/overview/${nsid}`);
+        this.props.history.push(`/overview/${nsid}`, {name:"Hello World"});
     }
     reachedBottom=()=>{
         let data = this.props.history.location.pathname.split('/');
@@ -40,8 +40,8 @@ class GroupDetail extends React.Component {
                 <Scroller onBottom={this.reachedBottom}>
                     <div className="centeredCss">
                         {this.props.loading ? <h3>Loading...</h3> : <div className="row centeredCss">
-                            {this.props.selectedGroupImages ? this.props.selectedGroupImages.map(item => (
-                                <div className="blockImage flexer" style={{ backgroundImage: `url(${item.url})` }} onClick={() => this.navigateToOverview(item)}>
+                            {this.props.selectedGroupImages ? this.props.selectedGroupImages.map((item, index) => (
+                                <div className="blockImage flexer" key={index} style={{ backgroundImage: `url(${item.url})` }} onClick={() => this.navigateToOverview(item)}>
                                     <DetailComponent data={item} />
                                 </div>
                             )) : null}

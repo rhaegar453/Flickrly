@@ -1,11 +1,77 @@
 import React from 'react';
+/* import { PieChart, Pie, Legend, Tooltip, } from 'recharts'; */
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { chunk, flatten } from 'lodash';
+import PieChart from './PieChart';
 
-const OverviewPage=(props)=>{
-    return(
-        <div>
-            <h1>This is the overview page</h1>
-        </div>
-    );
+var data02 = [
+    { name: 'Group A', value: 2400 }, { name: 'Group B', value: 4567 },
+    { name: 'Group C', value: 1398 }, { name: 'Group D', value: 9800 },
+    { name: 'Group E', value: 3908 }, { name: 'Group F', value: 4800 },
+];
+
+class OverviewPage extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataByLikes: [],
+            dataByViews: [],
+            dataByComments: [],
+            show: false
+        }
+    }
+    showGraph = () => {
+        this.setState({ show: true });
+    }
+
+    componentDidMount() {
+        console.log(this.props)
+        let data = this.props.history.location.pathname.split('/');
+        let nsid = data[data.length - 1];
+        let images = JSON.parse(localStorage.getItem(nsid));
+        let imagesFormatted = flatten(chunk(images.map(item => {
+            return { title: item.title, views: parseInt(item.views), comments: parseInt(item.comments), likes: parseInt(item.likes) }
+        }), 10).map((item, index) => {
+            if (index == 1) {
+                let summed = item.map(item => ({ ...item, title: "Others" })).reduce((a, c) => {
+                    return { title: a.title, views: a.views + c.views, comments: a.comments + c.comments, likes: a.likes + c.likes };
+                });
+                return summed;
+            }
+            else {
+                return item;
+            }
+        }));
+        console.log(imagesFormatted);
+        let imagesByViews = imagesFormatted.map(item => ({ key: item.title, data: item.views }));
+        let imagesByComments = imagesFormatted.map(item => ({ key: item.title, data: item.comments }));
+        this.setState({ dataByViews: imagesByViews, dataByComments: imagesByComments });
+    }
+
+    render() {
+        return (
+            <div className="container">
+                <div className="row">
+
+                    <div className="col0md-4 col-sd-12">
+                        <h1  style={{textAlign:'center'}}>Comments Chart</h1>
+                        <PieChart data={this.state.dataByComments} label="comments" ></PieChart>
+                    </div>
+                    <div className="col-md-4 col-sd-12">
+                        <h1  style={{textAlign:'center'}}>Likes Chart</h1>
+                        <PieChart data={this.state.dataByViews} label="likes" ></PieChart>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 }
 
-export default OverviewPage;
+const mapStateToProps = (state) => {
+    return {
+        images: state.selectedGroupImages
+    }
+}
+
+export default connect(mapStateToProps)(withRouter(OverviewPage));
