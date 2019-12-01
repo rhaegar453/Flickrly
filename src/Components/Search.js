@@ -3,7 +3,7 @@ import Item from './RecommendationItem';
 import './SearchBox.css';
 import RecommendationItem from './RecommendationItem';
 import { connect } from 'react-redux';
-import { searchGroup, getGroups,searchGroupCacheCheck, getGroupCacheCheck } from '../store/Actions/index';
+import {searchGroupCacheCheck, getGroupCacheCheck } from '../store/Actions/index';
 import { withRouter } from 'react-router-dom';
 import { debounce , throttle} from 'lodash';
 

@@ -157,11 +157,11 @@
 }
 
 .gridblock {
-  border-radius: 24px;
-  background-color: #e4e9e8;
+  border-radius: 12px;
+  background-color: white;
 }
 .gridblock:hover{
-  background-color: lightblue;
+  background-color: #f5f8f8;
 }
 
 .grid {

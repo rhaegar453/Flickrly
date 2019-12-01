@@ -1,0 +1,77 @@
+.imageBackground{
+    position: relative;
+}
+
+.imageDescription{
+    position: absolute;
+    border-radius: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: white;
+    opacity: 0;
+    transition: 0.3s;
+    height: 100%;
+}
+.centeredCss{
+    display: flex;
+    justify-content: center;
+}
+
+.myPos{
+    position: static;
+    padding: 0px;
+}
+
+.photoimage{
+    width: 100%;
+}
+
+.imageBackground:hover>.imageDescription{
+    opacity: 1;
+    transition: 0.3s;
+}
+.imageBackground:hover>.data{
+    opacity: 1;
+}
+
+.imageDescription>div>p{
+    font-size: 12px;
+}
+
+.imageDescription>div>.ownerText{
+    font-size: 10px;
+    color: grey;
+}
+.textPadding{
+    padding: 20px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+.itemsAlign{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.scrollview{
+    overflow: scroll;
+}
+
+.rowItems>div{
+    font-size: 10px;
+    margin-bottom: 5px;
+    color: grey;
+    margin-left: 20px;
+}
+
+.btn{
+    font-size: 10px;
+    margin-left: 5px;
+}
+
+.centeredImage{
+    margin:5px;
+}

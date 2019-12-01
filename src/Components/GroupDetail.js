@@ -3,10 +3,10 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './SearchBox.css';
 import { getImagesForGroup, getImagesForGroupCache, loadMoreImages } from '../store/Actions/index';
-import StaggeredCard from './StaggeredCard';
-import DetailComponent from './DetailComponent';
+import DetailComponent from './PhotoItem/PhotoItem';
 import Scroller from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
+
 
 
 class GroupDetail extends React.Component {
