@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './SearchBox.css';
-import { getImagesForGroup, getImagesForGroupCache, loadMoreImages } from '../store/Actions/index';
+import * as actionCreators from '../store/Actions/index';
 import DetailComponent from './PhotoItem/PhotoItem';
 import Scroller from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
@@ -67,8 +67,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getImagesForGroup: (data) => dispatch(getImagesForGroupCache(data)),
-        loadMoreImages: (nsid, page) => dispatch(loadMoreImages(nsid, page))
+        getImagesForGroup: (data) => dispatch(actionCreators.getImagesForGroupCheckCache(data)),
+        loadMoreImages: (nsid, page) => dispatch(actionCreators.loadMoreImages({nsid, page}))
     }
 }
 

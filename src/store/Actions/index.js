@@ -1,37 +1,58 @@
 import * as actions from '../ActionTypes/index';
 
-export const searchGroup=(payload)=>({type:actions.SEARCH_GROUPS, payload:{payload}});
-export const searchGroupStart=(data)=>({type:actions.SEARCH_GROUPS_START, payload:data.payload});
-export const searchGroupSuccess=(recommendations, searchText)=>({type:actions.SEARCH_GROUPS_SUCCESS,payload:recommendations, text:searchText});
-export const searchGroupFailure=(err)=>({type:actions.SEARCH_GROUPS_FAILURE, payload:err});
-export const searchGroupCacheCheck=(payload)=>({type:actions.SEARCH_GROUPS_CHECK_CACHE, payload});
+
+/* Get Groups */
+let {GET_GROUPS, GET_GROUPS_SUCCESS, GET_GROUPS_FAILURE, GET_GROUPS_GET_CACHE, GET_GROUPS_START, GET_GROUPS_CHECK_CACHE}=actions;
+
+export const getGroups=(data)=>({type:GET_GROUPS, payload:data});
+export const getGroupsSuccess=(data)=>({type:GET_GROUPS_SUCCESS, payload:data});
+export const getGroupsFailure=(err)=>({type:GET_GROUPS_FAILURE, payload:err});
+export const getGroupsGetCache=(data)=>({type:actions.GET_GROUPS_GET_CACHE, payload:data});
+export const getGroupsCheckCache=(data)=>({type:GET_GROUPS_CHECK_CACHE, payload:data});
+export const getGroupsStart=()=>({type:GET_GROUPS_START});
 
 
-export const getGroups=(payload)=>({type:actions.GET_GROUPS, payload:{payload}})
-export const getGroupStart=()=>({type:actions.GET_GROUPS_START});
-export const getGroupSuccess=(data, searchText)=>({type:actions.GET_GROUPS_SUCCESS, payload:data, text:searchText});
-export const getGroupFailure=(err)=>({type:actions.GET_GROUPS_FAILURE, payload:err});
-export const getGroupCacheCheck=(payload)=>({type:actions.GET_GROUPS_CHECK_CACHE, payload})
-
-export const getImagesForGroup=(payload)=>({type:actions.GET_IMAGES_FOR_GROUP, payload:payload});
-export const getImagesForGroupStart=()=>({type:actions.GET_IMAGES_FOR_GROUP_START});
-export const getImagesForGroupSuccess=(data, text)=>({type:actions.GET_IMAGES_FOR_GROUP_SUCCESS, payload:data, text});
-export const getImagesForGroupFailure=(err)=>({type:actions.GET_IMAGES_FOR_GROUP_FAILURE});
-export const getImagesForGroupCache=(key)=>({type:actions.GET_IMAGES_FOR_GROUP_CACHE, payload:key});
-
-export const loadMore=(pageNumber, text)=>({type:actions.LOAD_MORE, payload:{pageNumber, text}});
-export const loadMoreStart=()=>({type:actions.LOAD_MORE_START});
-export const loadMoreSuccess=(data)=>({type:actions.LOAD_MORE_SUCCESS, payload:data});
-export const loadMoreFailure=(err)=>({type:actions.LOAD_MORE_FAILURE, payload:err});
+/* Search Groups */
 
 
-export const loadMoreImages=(data, page)=>({type:actions.LOAD_MORE_IMAGES, payload:data, page});
-export const loadMoreImagesSuccess=(data)=>{
-    console.log(data);
-    return{type:actions.LOAD_MORE_IMAGES_SUCCESS, payload:data}
-};
-export const loadMoreImagesFailure=()=>({type:actions.LOAD_MORE_IMAGES_FAILURE});
+let {SEARCH_GROUPS,SEARCH_GROUPS_START, SEARCH_GROUPS_SUCCESS, SEARCH_GROUPS_FAILURE, SEARCH_GROUPS_CHECK_CACHE, SEARCH_GROUPS_GET_CACHE}=actions;
+
+export const searchGroups=(data)=>({type:SEARCH_GROUPS, payload:data});
+export const searchGroupsSuccess=(data)=>({type:SEARCH_GROUPS_SUCCESS, payload:data});
+export const searchGroupFailure=(err)=>({type:SEARCH_GROUPS_FAILURE, payload:err});
+export const searchGroupCheckCache=(data)=>({type:SEARCH_GROUPS_CHECK_CACHE, payload:data});
+export const searchGroupGetCache=(data)=>({type:SEARCH_GROUPS_GET_CACHE, payload:data});
+export const searchGroupsStart=()=>({type:SEARCH_GROUPS_START});
+
+/* Get images for groups */
+let {GET_IMAGES_FOR_GROUP, GET_IMAGES_FOR_GROUP_START, GET_IMAGES_FOR_GROUP_SUCCESS, GET_IMAGES_FOR_GROUP_FAILURE, GET_IMAGES_FOR_GROUP_GET_CACHE, GET_IMAGES_FOR_GROUP_CHECK_CACHE}=actions;
+
+
+export const getImagesForGroup=(data)=>({type:GET_IMAGES_FOR_GROUP, payload:data});
+export const getImagesForGroupSuccess=(data)=>({type:GET_IMAGES_FOR_GROUP_SUCCESS, payload:data});
+export const getImagesForGroupFailure=(err)=>({type:GET_IMAGES_FOR_GROUP_FAILURE, payload:err});
+export const getImagesForGroupCheckCache=(data)=>({type:GET_IMAGES_FOR_GROUP_CHECK_CACHE, payload:data});
+export const getImagesForGroupGetCache=(data)=>({type:GET_IMAGES_FOR_GROUP_GET_CACHE, payload:data});
+export const getImagesForGroupStart=()=>({type:GET_IMAGES_FOR_GROUP_START});
+
+
+export const loadMoreGroups=(data)=>({type:actions.LOAD_MORE_GROUPS, payload:data});
+export const loadMoreGroupsStart=()=>({type:actions.LOAD_MORE_GROUPS_START});
+export const loadMoreGroupsSuccess=(data)=>({type:actions.LOAD_MORE_GROUPS_SUCCESS, payload:data});
+export const loadMoreGroupsFailure=(err)=>({type:actions.LOAD_MORE_GROUPS_FAILURE, payload:err});
+export const loadMoreGroupsCheckCache=(data)=>({type:actions.LOAD_MORE_GROUPS_CHECK_CACHE, payload:data});
+export const loadMoreGroupsGetCache=(data)=>({type:actions.LOAD_MORE_GROUPS_CHECK_CACHE, payload:data});
+
+
+export const loadMoreImages=(data)=>({type:actions.LOAD_MORE_IMAGES, payload:data});
 export const loadMoreImagesStart=()=>({type:actions.LOAD_MORE_IMAGES_START});
+export const loadMoreImagesSuccess=(data)=>({type:actions.LOAD_MORE_IMAGES_SUCCESS, payload:data});
+export const loadMoreImagesFailure=(err)=>({type:actions.LOAD_MORE_IMAGES_FAILURE, payload:err});
+export const loadMoreImagesCheckCache=(data)=>({type:actions.LOAD_MORE_IMAGES_CHECK_CACHE, payload:data});
+export const loadMoreImagesGetCache=(data)=>({type:actions.LOAD_MORE_IMAGES_GET_CACHE, payload:data});
 
-export const selectGroup=(groupDetails)=>({type:actions.SELECT_GROUP, payload:groupDetails});
 
+
+let {SELECT_GROUP} =actions;
+
+export const selectGroup=(data)=>({type:SELECT_GROUP, payload:data});

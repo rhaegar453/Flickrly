@@ -1,15 +1,23 @@
 import React from 'react';
 import Navbar from './Components/Navbar';
 import './App.css';
-import Search from './Components/Search';
-import { isModuleDeclaration } from '@babel/types';
-import GroupCard from './Components/GroupCard';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import GroupComponent from './Components/GroupComponent';
+import GroupComponent from './Components/GroupsPage';
 import GroupDetail from './Components/GroupDetail';
 import HomePage from './Components/HomePage';
 import OverviewPage from './Components/OverviewPage';
+
+import db from './Helpers/Dexie';
+
+
+db.groups.where('text').equals('arizona').toArray().then(data=>{
+  console.log(data);
+})
+.catch(err=>{
+  console.log(err);
+})
+
 
 class App extends React.Component {
   constructor(props) {

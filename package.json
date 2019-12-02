@@ -9,6 +9,7 @@
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "chartjs": "^0.3.24",
+    "dexie": "^2.0.4",
     "faker": "^4.1.0",
     "font-awesome": "^4.7.0",
     "install": "^0.13.0",

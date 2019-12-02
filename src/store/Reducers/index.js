@@ -1,5 +1,6 @@
 import * as actions from '../ActionTypes/index';
-import {uniqBy} from 'lodash';
+import { uniqBy } from 'lodash';
+import db from '../../Helpers/Dexie';
 
 const initialState = {
     searchQuery: '',
@@ -10,55 +11,44 @@ const initialState = {
     selectedGroup: null,
     selectedGroupImages: null,
     loading: false,
-    selectedGroupWithInfo: null, 
-    currentPage:1, 
-    scrolling:false
+    selectedGroupWithInfo: null,
+    currentPage: 1,
+    scrolling: false
 }
 
-const addToSessionStorage = (action, key, value) => {
-    if (key == undefined) {
-        return;
-    }
-
-    let data = JSON.parse(sessionStorage.getItem(key));
-    if (action == 'search') {
-        if (data == null) {
-            let searchData = JSON.parse(value);
-            sessionStorage.setItem(key, JSON.stringify({ search: searchData }));
-            return;
-        }
-        if (data.get) {
-            let newData = {};
-            let searchData = JSON.parse(value);
-            newData.get = data.get;
-            newData.search = searchData;
-            sessionStorage.setItem(key, JSON.stringify(newData));
-            return;
-        }
-    }
-    else {
-        if (data == null) {
-            let searchData = JSON.parse(value);
-            sessionStorage.setItem(key, JSON.stringify({ search: searchData }));
-            return;
-        }
-        if (data.search) {
-            let newData = {};
-            let getData = JSON.parse(value);
-            newData.search = data.search;
-            newData.get = getData;
-            sessionStorage.setItem(key, JSON.stringify(newData));
-            return;
-        }
-    }
-}
-
-const persistInLocalStorage=(arr, key)=>{
-    let localData=JSON.parse(localStorage.getItem(key));
-    let totalData=[...arr, ...localData];
-    let newData=uniqBy(totalData, (e)=>e.url);
+const persistInLocalStorage = (arr, key) => {
+    let localData = JSON.parse(localStorage.getItem(key));
+    let totalData = [...arr, ...localData];
+    let newData = uniqBy(totalData, (e) => e.url);
     console.log(newData);
     localStorage.setItem(key, JSON.stringify(newData));
+}
+
+
+
+const persistInDB = (payload, text, action) => {
+    try {
+        text = text.toLowerCase();
+        if (action == 'groups') {
+            payload.map(item => {
+                let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
+                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text });
+            })
+        }
+        else if (action == 'search') {
+            payload.map(item => {
+                let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
+                db.search.put({ groupid: item.nsid, icon: iconUrl, name: item.name, text: text })
+            })
+        }
+    }
+    catch (err) {
+        console.log(err);
+    }
+}
+
+const getSearchCachedData = (data) => {
+    console.log(data);
 }
 
 
@@ -67,20 +57,21 @@ const reducer = (state = initialState, action) => {
         case actions.SEARCH_GROUPS_START:
             return { ...state, loading: true, searchQuery: action.payload }
         case actions.SEARCH_GROUPS_SUCCESS:
-            if (action.text) {
-                /*sessionStorage.setItem(action.text, JSON.stringify({ search: { ...action.payload } })); */
-                addToSessionStorage('search', action.text, JSON.stringify(action.payload));
+            if (action.payload.text.length > 0) {
+                persistInDB(action.payload.recommendations, action.payload.text, 'search');
             }
-            let data = JSON.parse(sessionStorage.getItem(action.text));
-            return { ...state, loading: false, groupRecommendations: action.payload, searchQuery: action.text };
+            let data = action.payload.recommendations.map(item => {
+                let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
+                return { groupid: item.nsid, icon: iconUrl, name: item.name, text: action.payload.text };
+            })
+            return { ...state, loading: false, groupRecommendations: data, searchQuery: action.payload.text };
         case actions.SEARCH_GROUPS_FAILURE:
             return { ...state, loading: false, error: action.payload }
+        case actions.SEARCH_GROUPS_GET_CACHE:
+            return { ...state, loading: false, groupRecommendations: action.payload.data, searchQuery: action.payload.action.payload }
         case actions.GET_GROUPS_START:
             return { ...state, loading: true }
         case actions.GET_GROUPS_SUCCESS:
-            if (action.text) {
-                addToSessionStorage('get', action.text.payload, JSON.stringify(action.payload));
-            }
             return { ...state, loading: false, groups: action.payload }
         case actions.GET_GROUPS_FAILURE:
             return { ...state, loading: false, error: action.payload }
@@ -89,24 +80,23 @@ const reducer = (state = initialState, action) => {
         case actions.GET_IMAGES_FOR_GROUP_START:
             return { ...state, loading: true }
         case actions.GET_IMAGES_FOR_GROUP_SUCCESS:
+            console.log(action.payload);
             localStorage.setItem(action.text, JSON.stringify(action.payload));
-            return {...state, selectedGroupImages: action.payload, loading: false }
-        case actions.LOAD_MORE_SUCCESS:
-            let filteredData=action.payload.data.filter(item=>item);
-            let sessionData=JSON.parse(sessionStorage.getItem(action.payload.text));
-            let newData={...sessionData, get:[...state.groups, ...filteredData]};
+            return { ...state, selectedGroupImages: action.payload, loading: false }
+        case actions.LOAD_MORE_GROUPS_SUCCESS:
+            let filteredData = action.payload.data.filter(item => item);
+            let sessionData = JSON.parse(sessionStorage.getItem(action.payload.text));
+            let newData = { ...sessionData, get: [...state.groups, ...filteredData] };
             sessionStorage.setItem(action.payload.text, JSON.stringify(newData));
-            return {...state, currentPage:action.payload.page, groups:[...state.groups, ...filteredData], scrolling:false};
-        case actions.LOAD_MORE_START:
-            return {...state, scrolling:true};
+            return { ...state, currentPage: action.payload.page, groups: [...state.groups, ...filteredData], scrolling: false };
+        case actions.LOAD_MORE_GROUPS_START:
+            return { ...state, scrolling: true };
         case actions.LOAD_MORE_IMAGES_START:
-            return {...state, scrolling:true};
+            return { ...state, scrolling: true };
         case actions.LOAD_MORE_IMAGES_SUCCESS:
-            console.log(action);
-            persistInLocalStorage([...action.payload.photos], action.payload.nsid);
-            return {...state, scrolling:false, selectedGroupImages:[...state.selectedGroupImages, ...action.payload.photos]};
+            return { ...state, scrolling: false, selectedGroupImages: [...state.selectedGroupImages, ...action.payload.photos] };
         default:
-            return {...state };
+            return { ...state };
     }
 }
 

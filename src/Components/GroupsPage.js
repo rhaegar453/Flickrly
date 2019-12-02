@@ -1,15 +1,15 @@
 import React from 'react';
-import GroupCard from './GroupCard';
 import '../App.css';
 import { connect } from 'react-redux';
 import Search from './Search';
 import Chart from './Chart';
 import Modal from './ModalComponent';
 import ModalButton from './ModalButton';
-import { loadMore } from '../store/Actions';
+import {loadMoreGroups} from '../store/Actions/index';
 import { throttle, debounce } from 'redux-saga/effects';
 import ScrollListener from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
+import GroupItem from './GroupItem/GroupItem';
 
 
 class GroupComponent extends React.Component {
@@ -20,9 +20,7 @@ class GroupComponent extends React.Component {
         }
     }
 
-
     loadMore = () => {
-        console.log("Loading more content");
         this.props.loadMore(this.props.currentPage + 1, this.props.searchQuery);
     }
     render() {
@@ -43,12 +41,9 @@ class GroupComponent extends React.Component {
                             </Modal>
                         </div>
                         <div className="w-layout-grid grid">
-                            {this.props.groups.map((item, index) => (
-                                <GroupCard data={item} key={index}></GroupCard>
-                            ))}
+                            {console.log(this.props.groups)}
                             {this.props.scrolling ? <SpinLoader /> : null}
                         </div>
-                        {/*                     <button className="btn btn-success" onClick={this.loadMore}>Load More</button> */}
                     </div> : null}
                 </div>
             </ScrollListener>
@@ -67,7 +62,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadMore: (data, searchQuery) => dispatch(loadMore(data, searchQuery))
+        loadMore: (data, searchQuery) => dispatch(loadMoreGroups({data, searchQuery}))
     }
 }
 
