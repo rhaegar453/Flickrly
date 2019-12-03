@@ -70,7 +70,7 @@ const persistFavorite = (data, value, action) => {
         db.groups.update(data, { isFavorite: value });
     }
     else if (action = 'toggleimagesfavorite') {
-
+        db.images.update(data, { isFavorite: value });
     }
 }
 
@@ -160,9 +160,30 @@ const reducer = (state = initialState, action) => {
                 })
             }
         case actions.MAKE_IMAGE_FAVORITE:
-            return { ...state }
+            console.log(action);
+            persistFavorite(action.payload, true, 'toggleimagesfavorite');
+            return {
+                ...state, selectedGroupImages: state.selectedGroupImages.map(item => {
+                    if (item.photoid == action.payload) {
+                        return { ...item, isFavorite: true }
+                    }
+                    else {
+                        return item;
+                    }
+                })
+            }
         case actions.REMOVE_IMAGE_FAVORITE:
-            return { ...state }
+            persistFavorite(action.payload, false, 'toggleimagesfavorite');
+            return {
+                ...state, selectedGroupImages: state.selectedGroupImages.map(item => {
+                    if (item.photoid == action.payload) {
+                        return { ...item, isFavorite: false }
+                    }
+                    else {
+                        return item;
+                    }
+                })
+            }
         default:
             return { ...state };
     }

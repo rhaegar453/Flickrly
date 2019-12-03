@@ -36,18 +36,29 @@ class GalleryPage extends React.Component {
         this.setState({ currentPage: this.state.currentPage + 1 });
     }
 
+    makeFavorite = (data) => {
+        console.log("Making this image favorite");
+        console.log(data)
+        this.props.makeImageFavorite(data);
+    }
+    removeFavorite = (data) => {
+        console.log("Removing this image from favorites");
+        console.log(data);
+        this.props.removeImageFavorite(data);
+    }
+
     render() {
         return (
             <div className="container" style={{ marginTop: '10px' }}>
                 <Scroller onBottom={this.reachedBottom}>
-                {this.props.selectedGroup ? <h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5> : null}
-                <div>
-                    {this.props.selectedGroupImages?<Masonry>
-                        {this.props.selectedGroupImages.map((item, index) => (
-                        <PhotoItem comments={item.comments} date={item.date} key={index} description={item.description} isFavorite={item.isFavorite} views={item.views} owner={item.owner} title={item.title} url={item.url} />
-                    ))}
-                    </Masonry> : null}
-                </div>
+                    {this.props.selectedGroup ? <h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5> : null}
+                    <div>
+                        {this.props.selectedGroupImages ? <Masonry>
+                            {this.props.selectedGroupImages.map((item, index) => (
+                                <PhotoItem makeFavorite={this.makeFavorite} removeFavorite={this.removeFavorite} photoid={item.photoid} comments={item.comments} date={item.date} key={index} description={item.description} isFavorite={item.isFavorite} views={item.views} owner={item.owner} title={item.title} url={item.url} />
+                            ))}
+                        </Masonry> : null}
+                    </div>
                 </Scroller>
             </div>
         );
@@ -65,7 +76,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getImagesForGroup: (data) => dispatch(actionCreators.getImagesForGroupCheckCache(data)),
-        loadMoreImages: (nsid, page) => dispatch(actionCreators.loadMoreImages({ nsid, page }))
+        loadMoreImages: (nsid, page) => dispatch(actionCreators.loadMoreImages({ nsid, page })),
+        makeImageFavorite:(data)=>dispatch(actionCreators.makeImageFavorite(data)), 
+        removeImageFavorite:(data)=>dispatch(actionCreators.removeImageFavorite(data))
     }
 }
 
