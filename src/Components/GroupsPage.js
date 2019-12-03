@@ -5,14 +5,15 @@ import Search from './Search';
 import Chart from './Chart';
 import Modal from './ModalComponent';
 import ModalButton from './ModalButton';
-import {loadMoreGroups} from '../store/Actions/index';
-import { throttle, debounce } from 'redux-saga/effects';
+import { loadMoreGroups, selectGroup } from '../store/Actions/index';
+import { throttle, debounce, select } from 'redux-saga/effects';
 import ScrollListener from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
 import GroupItem from './GroupItem/GroupItem';
+import { withRouter } from 'react-router-dom';
 
 
-class GroupComponent extends React.Component {
+class GroupPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -22,6 +23,17 @@ class GroupComponent extends React.Component {
 
     loadMore = () => {
         this.props.loadMore(this.props.currentPage + 1, this.props.searchQuery);
+    }
+    selectGroup = (data) => {
+        this.props.selectGroup(data);
+        this.props.history.push(`/gallery/${data.groupid}`);
+    }
+
+    onMakeFavorite = (id) => {
+        console.log(id)
+    }
+    onRemoveFavorite = (id) => {
+        console.log(id);
     }
     render() {
         return (
@@ -41,7 +53,9 @@ class GroupComponent extends React.Component {
                             </Modal>
                         </div>
                         <div className="w-layout-grid grid">
-                            {console.log(this.props.groups)}
+                            {this.props.groups.map(item => (
+                                <GroupItem groupid={item.groupid} makeFavorite={this.onMakeFavorite} removeFavorite={this.onRemoveFavorite} iconURL={item.icon} onClick={() => this.selectGroup(item)} isFavorite={item.isFavorite} key={item.groupid} members={parseInt(item.members)} photos={item.photos} title={item.name} />
+                            ))}
                             {this.props.scrolling ? <SpinLoader /> : null}
                         </div>
                     </div> : null}
@@ -62,8 +76,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        loadMore: (data, searchQuery) => dispatch(loadMoreGroups({data, searchQuery}))
+        loadMore: (data, searchQuery) => dispatch(loadMoreGroups({ data, searchQuery })),
+        selectGroup: (data) => dispatch(selectGroup(data))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupComponent);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GroupPage));

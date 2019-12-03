@@ -10,7 +10,6 @@ import reducer from './store/Reducers/index';
 import rootSaga from './store/Sagas/index';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import GroupDetail from './Components/GroupDetail';
 import {cache} from './Middlewares/middleware';
 
 

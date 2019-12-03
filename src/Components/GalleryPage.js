@@ -9,7 +9,7 @@ import { SpinLoader } from 'react-css-loaders';
 
 
 
-class GroupDetail extends React.Component {
+class GalleryPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -19,8 +19,9 @@ class GroupDetail extends React.Component {
     componentDidMount() {
         console.log("Mounting the component now");
         let data = this.props.history.location.pathname.split('/');
-        let nsid = data[data.length - 1];
-        this.props.getImagesForGroup(nsid);
+        let groupid = data[data.length - 1];
+        console.log(groupid);
+        this.props.getImagesForGroup(groupid);
     }
     navigateToOverview = (item) => {
         let data = this.props.history.location.pathname.split('/');
@@ -68,8 +69,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         getImagesForGroup: (data) => dispatch(actionCreators.getImagesForGroupCheckCache(data)),
-        loadMoreImages: (nsid, page) => dispatch(actionCreators.loadMoreImages({nsid, page}))
+        loadMoreImages: (nsid, page) => dispatch(actionCreators.loadMoreImages({ nsid, page }))
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GroupDetail));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GalleryPage));

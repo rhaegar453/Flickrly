@@ -105,7 +105,13 @@
   
   .gridblock {
     border-radius: 0px;
-    background-color: white;
+    background-color:  rgb(193, 236, 241);
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .gridblock:hover{
+    background-color: rgba(154, 178, 197, 0.548);
   }
   
   .grid {

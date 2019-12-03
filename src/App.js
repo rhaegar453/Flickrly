@@ -4,19 +4,12 @@ import './App.css';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import GroupComponent from './Components/GroupsPage';
-import GroupDetail from './Components/GroupDetail';
+import GalleryPage from './Components/GalleryPage';
 import HomePage from './Components/HomePage';
 import OverviewPage from './Components/OverviewPage';
 
 import db from './Helpers/Dexie';
 
-
-db.groups.where('text').equals('arizona').toArray().then(data=>{
-  console.log(data);
-})
-.catch(err=>{
-  console.log(err);
-})
 
 
 class App extends React.Component {
@@ -29,7 +22,7 @@ class App extends React.Component {
         <Navbar />
         <Switch>
           <Route path="/" exact={true}><HomePage/></Route>
-          <Route path="/gallery/:nsid"><GroupDetail /></Route>
+          <Route path="/gallery/:nsid"><GalleryPage /></Route>
           <Route path="/groups" exact={true}><GroupComponent /></Route>
           <Route path="/overview/:nsid" exact={true}><OverviewPage /></Route>
         </Switch>

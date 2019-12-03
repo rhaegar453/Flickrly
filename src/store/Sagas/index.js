@@ -1,6 +1,7 @@
 import { put, takeEvery, all, select, takeLatest } from 'redux-saga/effects';
 import * as actions from '../ActionTypes/index';
 import * as actionCreators from '../Actions/index';
+import db from '../../Helpers/Dexie';
 
 import axios from 'axios';
 
@@ -19,6 +20,8 @@ const createImageURLMedium = ({ farmid, serverid, id, secret }) => {
 
 function* getGroups(action) {
     try {
+        console.log("Searching for new groups");
+        console.log(action);
         yield put(actionCreators.getGroupsStart());
         let groupsURL = `https://www.flickr.com/services/rest/?method=flickr.groups.search&api_key=2f3d9d105879101fe5df7e5c9718a1ad&text=${action.payload}&per_page=10&format=json&nojsoncallback=1`;
         let data = yield axios.get(groupsURL);
@@ -45,7 +48,7 @@ function* getGroups(action) {
 
         let resolvedData = yield Promise.all(dataWithImages);
         let mod = resolvedData.filter(item => item);
-        yield put(actionCreators.getGroupsSuccess({ mod, text: action.payload }));
+        yield put(actionCreators.getGroupsSuccess({ data:mod, text: action.payload }));
     }
     catch (err) {
         yield put(actionCreators.getGroupsFailure(err));
@@ -70,8 +73,10 @@ function* searchGroups(action) {
 
 function* getImagesForGroup(action) {
     try {
+        console.log("Getting the images for the group", action);
         yield put(actionCreators.getImagesForGroupStart());
-        let groupData = yield select((state) => state.selectedGroup);
+        let groupData = yield select((state)=>state.selectedGroup);
+        console.log(groupData);
         let modified = yield all(groupData.photos.map(async item => {
             let photoInfoUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=2f3d9d105879101fe5df7e5c9718a1ad&photo_id=${item.id}&format=json&nojsoncallback=1`;
             let data = await axios.get(photoInfoUrl);
@@ -80,6 +85,7 @@ function* getImagesForGroup(action) {
         yield put(actionCreators.getImagesForGroupSuccess({ data: modified, text: action.payload }));
     }
     catch (err) {
+        console.log(err);
         yield put(actionCreators.getImagesForGroupFailure());
     }
 }

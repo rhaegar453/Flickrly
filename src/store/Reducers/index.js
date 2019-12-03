@@ -32,7 +32,7 @@ const persistInDB = (payload, text, action) => {
         if (action == 'groups') {
             payload.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text });
+                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: false });
             })
         }
         else if (action == 'search') {
@@ -41,15 +41,19 @@ const persistInDB = (payload, text, action) => {
                 db.search.put({ groupid: item.nsid, icon: iconUrl, name: item.name, text: text })
             })
         }
+        else if (action == 'images') {
+            console.log(payload);
+            payload.map(item => {
+                db.images.put({ groupid: text, ...item, isFavorite: false });
+            })
+        }
     }
     catch (err) {
         console.log(err);
     }
 }
 
-const getSearchCachedData = (data) => {
-    console.log(data);
-}
+
 
 
 const reducer = (state = initialState, action) => {
@@ -72,6 +76,15 @@ const reducer = (state = initialState, action) => {
         case actions.GET_GROUPS_START:
             return { ...state, loading: true }
         case actions.GET_GROUPS_SUCCESS:
+            if (action.payload.text.length > 0) {
+                persistInDB(action.payload.data, action.payload.text, 'groups');
+            }
+            let groups = action.payload.data.map(item => {
+                let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
+                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: false };
+            });
+            return { ...state, loading: false, groups: groups }
+        case actions.GET_GROUPS_GET_CACHE:
             return { ...state, loading: false, groups: action.payload }
         case actions.GET_GROUPS_FAILURE:
             return { ...state, loading: false, error: action.payload }
@@ -80,9 +93,14 @@ const reducer = (state = initialState, action) => {
         case actions.GET_IMAGES_FOR_GROUP_START:
             return { ...state, loading: true }
         case actions.GET_IMAGES_FOR_GROUP_SUCCESS:
-            console.log(action.payload);
-            localStorage.setItem(action.text, JSON.stringify(action.payload));
-            return { ...state, selectedGroupImages: action.payload, loading: false }
+            if (action.payload.text.length > 0) {
+                persistInDB(action.payload.data, action.payload.text, "images");
+            }
+            return { ...state, selectedGroupImages: action.payload.data, loading: false }
+
+        case actions.GET_IMAGES_FOR_GROUP_GET_CACHE:
+            console.log(action);
+            return { ...state, selectedGroupImages: action.payload };
         case actions.LOAD_MORE_GROUPS_SUCCESS:
             let filteredData = action.payload.data.filter(item => item);
             let sessionData = JSON.parse(sessionStorage.getItem(action.payload.text));

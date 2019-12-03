@@ -4,9 +4,6 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } fro
 export default class Chart extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: [{ name: 'Shivaraj', value: 200 }, { name: 'Sachin', value: 300 }, { name: 'Sheela', value: 220 }, { name: 'Shankar', value: 400 }]
-        }
     }
     render() {
         return (

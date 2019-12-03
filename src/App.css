@@ -156,13 +156,7 @@
   text-decoration: underline;
 }
 
-.gridblock {
-  border-radius: 12px;
-  background-color: white;
-}
-.gridblock:hover{
-  background-color: #f5f8f8;
-}
+
 
 .grid {
   -ms-grid-rows: auto auto auto;
