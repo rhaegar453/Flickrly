@@ -6,13 +6,16 @@ import db from '../../Helpers/Dexie';
 import GroupFavoriteItem from './FavoriteGroupItem/FavoriteGroupItem';
 import Masonry from 'react-masonry-component';
 import PhotoItem from '../PhotoItem/PhotoItem';
+import ZoomImage from 'react-medium-image-zoom';
 
 class FavoriteDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             page: null,
-            data: []
+            data: [],
+            isZoomed: false,
+            selectedImage: null
         }
     }
     componentWillMount() {
@@ -36,10 +39,18 @@ class FavoriteDetail extends React.Component {
         this.props.removeFavorite(data);
         this.setState({ data: this.state.data.filter(item => item.groupid != data) })
     }
-    removeFavoriteImage=(data)=>{
+    removeFavoriteImage = (data) => {
         console.log("Removing favorite image ", data);
-        this.setState({data:this.state.data.filter(item=>item.photoid!=data)});
+        this.setState({ data: this.state.data.filter(item => item.photoid != data) });
         this.props.removeFavorite(data);
+    }
+
+    onImageZoom = (url) => {
+        this.setState({ isZoomed: true, selectedImage: url })
+    }
+
+    onImageUnzoom = () => {
+        this.setState({ isZoomed: false });
     }
     render() {
         return (
@@ -53,10 +64,11 @@ class FavoriteDetail extends React.Component {
                 </div> :
                     <Masonry>
                         {this.state.data.map(item => (
-                            <PhotoItem {...item} removeFavorite={this.removeFavoriteImage}/>
+                            <PhotoItem {...item} removeFavorite={this.removeFavoriteImage} openImage={this.onImageZoom} />
                         ))}
                     </Masonry>
                 }
+                {this.state.isZoomed && this.state.selectedImage ? <ZoomImage isZoomed={true} onUnzoom={this.onImageUnzoom} image={{ src: this.state.selectedImage }}></ZoomImage> : null}
             </div>
         );
     }
@@ -64,8 +76,8 @@ class FavoriteDetail extends React.Component {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        removeFavorite: (data) => dispatch(removeGroupFavorite(data)), 
-        removeFavoriteImage:(data)=>dispatch(removeImageFavorite(data))
+        removeFavorite: (data) => dispatch(removeGroupFavorite(data)),
+        removeFavoriteImage: (data) => dispatch(removeImageFavorite(data))
     }
 }
 

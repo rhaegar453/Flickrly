@@ -8,13 +8,14 @@ import Modal from '../ModalComponent';
 import ModalButton from '../ModalButton';
 
 
+
 const handleImageError = (e) => {
     e.target.src = 'https://images.vexels.com/media/users/3/137278/isolated/preview/d51ab2c086a7046cded42a02cb44c8ab-flickr-icon-logo-by-vexels.png'
 }
 
 
 
-const PhotoItem = ({ photoid, views, comments, date, description, owner, title, url, isFavorite, makeFavorite, removeFavorite, openModal }) => {
+const PhotoItem = ({ photoid, views, comments, date, description, owner, title, url, isFavorite, makeFavorite, removeFavorite, openImage }) => {
     return (
         <div className="col-md-3 col-sm-6 col-xs-6 myPos">
             <div className="imageBackground">
@@ -36,6 +37,9 @@ const PhotoItem = ({ photoid, views, comments, date, description, owner, title, 
                             <div className="row centeredCss">
                                 {!isFavorite ? <button className="btn btn-danger" onClick={()=>makeFavorite(photoid)} style={{ marginBottom: "20px" }} title="Make Favorite"><i class="fa fa-heart"></i> Make Favorite</button> :
                                     <button className="btn btn-primary btn-log" onClick={()=>removeFavorite(photoid)} style={{ marginBottom: "20px" }}>Remove Favorite</button>}
+                            </div>
+                            <div className="centeredCss">
+                                 <button className="btn btn-success" style={{padding:'5px'}} onClick={()=>openImage(url)}>Open Image</button>
                             </div>
                         </div>
                     </div>
@@ -59,7 +63,8 @@ PhotoItem.propTypes = {
     url: PropTypes.string,
     isFavorite: PropTypes.number.isRequired,
     makeFavorite:PropTypes.func,
-    removeFavorite:PropTypes.func.isRequired
+    removeFavorite:PropTypes.func.isRequired, 
+    openImage:PropTypes.func.isRequired
 }
 
 export default PhotoItem; 

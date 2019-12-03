@@ -7,6 +7,7 @@ import PhotoItem from './PhotoItem/PhotoItem';
 import Scroller from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
 import Masonry from 'react-masonry-component';
+import ZoomImage from 'react-medium-image-zoom';
 
 
 
@@ -15,7 +16,9 @@ class GalleryPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPage: 1
+            currentPage: 1, 
+            isZoomed:false, 
+            selectedImage:null
         }
     }
     componentDidMount() {
@@ -46,6 +49,13 @@ class GalleryPage extends React.Component {
         console.log(data);
         this.props.removeImageFavorite(data);
     }
+    handleZoom=(url)=>{
+        console.log(url);
+        this.setState({selectedImage:url,isZoomed:true});
+    }
+    handleUnzoom=()=>{
+        this.setState({isZoomed:false});
+    }
 
     render() {
         return (
@@ -55,10 +65,11 @@ class GalleryPage extends React.Component {
                     <div>
                         {this.props.selectedGroupImages ? <Masonry>
                             {this.props.selectedGroupImages.map((item, index) => (
-                                <PhotoItem makeFavorite={this.makeFavorite} removeFavorite={this.removeFavorite} photoid={item.photoid} comments={item.comments} date={item.date} key={index} description={item.description} isFavorite={item.isFavorite} views={item.views} owner={item.owner} title={item.title} url={item.url} />
+                                <PhotoItem openImage={this.handleZoom} makeFavorite={this.makeFavorite} removeFavorite={this.removeFavorite} photoid={item.photoid} comments={item.comments} date={item.date} key={index} description={item.description} isFavorite={item.isFavorite} views={item.views} owner={item.owner} title={item.title} url={item.url} />
                             ))}
                         </Masonry> : null}
                     </div>
+                    {this.state.isZoomed&&this.state.selectedImage.length>0?<ZoomImage image={{src:this.state.selectedImage}} isZoomed={this.state.isZoomed} onUnzoom={this.handleUnzoom} zoomImage={{src:this.state.selectedImage}}/>:null}
                 </Scroller>
             </div>
         );
