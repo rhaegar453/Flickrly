@@ -30,6 +30,7 @@
 .boxPosition{
     position: absolute;
     width: 95%;
+    z-index: 3000;
   }
 @media (max-width:479px){
     .iconimage{

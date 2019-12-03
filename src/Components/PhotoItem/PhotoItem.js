@@ -30,7 +30,7 @@ const PhotoItem = ({ photoid, views, comments, date, description, owner, title, 
                                 <div style={{ textAlign: 'center' }} className="row rowItems">
                                     <div><i class="fa fa-eye"></i> {views}</div>
                                     <div><i class="fa fa-comments"></i>  {comments} </div>
-                                    <div><i class="fa fa-calendar"></i> {moment(date).format('DD/MM/YYYY')} </div>
+                                    <div><i class="fa fa-calendar"></i> {moment.unix(date).format('DD/MM/YYYY')} </div>
                                 </div>
                             </div>
                             <div className="row centeredCss">

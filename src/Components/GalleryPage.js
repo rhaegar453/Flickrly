@@ -3,9 +3,11 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import './SearchBox.css';
 import * as actionCreators from '../store/Actions/index';
-import DetailComponent from './PhotoItem/PhotoItem';
+import PhotoItem from './PhotoItem/PhotoItem';
 import Scroller from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
+import Masonry from 'react-masonry-component';
+
 
 
 
@@ -20,7 +22,6 @@ class GalleryPage extends React.Component {
         console.log("Mounting the component now");
         let data = this.props.history.location.pathname.split('/');
         let groupid = data[data.length - 1];
-        console.log(groupid);
         this.props.getImagesForGroup(groupid);
     }
     navigateToOverview = (item) => {
@@ -30,28 +31,23 @@ class GalleryPage extends React.Component {
     }
     reachedBottom = () => {
         let data = this.props.history.location.pathname.split('/');
-        let nsid = data[data.length - 1];
-        console.log("I have reached the bottom");
-        this.props.loadMoreImages(nsid, this.state.currentPage + 1);
+        let groupid = data[data.length - 1];
+        this.props.loadMoreImages(groupid, this.state.currentPage + 1);
         this.setState({ currentPage: this.state.currentPage + 1 });
     }
+
     render() {
         return (
             <div className="container" style={{ marginTop: '10px' }}>
-                {this.props.selectedGroup ? <h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5> : null}
                 <Scroller onBottom={this.reachedBottom}>
-                    <div className="centeredCss">
-                        {this.props.loading ? <h3>Loading...</h3> : <div className="row centeredCss">
-                            {this.props.selectedGroupImages ? this.props.selectedGroupImages.map((item, index) => (
-                                <div className="blockImage flexer" key={index} style={{ backgroundImage: `url(${item.url})` }} onClick={() => this.navigateToOverview(item)}>
-                                    <DetailComponent data={item} />
-                                </div>
-                            )) : null}
-                            <div>
-                                {this.props.scrolling ? <SpinLoader /> : null}
-                            </div>
-                        </div>}
-                    </div>
+                {this.props.selectedGroup ? <h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5> : null}
+                <div>
+                    {this.props.selectedGroupImages?<Masonry>
+                        {this.props.selectedGroupImages.map((item, index) => (
+                        <PhotoItem comments={item.comments} date={item.date} key={index} description={item.description} isFavorite={item.isFavorite} views={item.views} owner={item.owner} title={item.title} url={item.url} />
+                    ))}
+                    </Masonry> : null}
+                </div>
                 </Scroller>
             </div>
         );

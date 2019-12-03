@@ -42,10 +42,22 @@ const persistInDB = (payload, text, action) => {
             })
         }
         else if (action == 'images') {
-            console.log(payload);
             payload.map(item => {
                 db.images.put({ groupid: text, ...item, isFavorite: false });
             })
+        }
+        else if (action == 'loadmoregroups') {
+            payload.map(item => {
+                let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
+                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: false });
+            })
+        }
+        else if (action = 'loadmoreimages') {
+            payload.map(item => {
+                /*db.images.put({ groupid: text, ...item, isFavorite: false }); */
+                console.log(item);
+                db.images.put({ groupid: text, ...item, isFavorite: false });
+            });
         }
     }
     catch (err) {
@@ -99,19 +111,25 @@ const reducer = (state = initialState, action) => {
             return { ...state, selectedGroupImages: action.payload.data, loading: false }
 
         case actions.GET_IMAGES_FOR_GROUP_GET_CACHE:
-            console.log(action);
             return { ...state, selectedGroupImages: action.payload };
         case actions.LOAD_MORE_GROUPS_SUCCESS:
-            let filteredData = action.payload.data.filter(item => item);
-            let sessionData = JSON.parse(sessionStorage.getItem(action.payload.text));
-            let newData = { ...sessionData, get: [...state.groups, ...filteredData] };
-            sessionStorage.setItem(action.payload.text, JSON.stringify(newData));
-            return { ...state, currentPage: action.payload.page, groups: [...state.groups, ...filteredData], scrolling: false };
+            if (action.payload.text.length > 0) {
+                persistInDB(action.payload.data, action.payload.text, 'loadmoregroups');
+            }
+            let groupsLoaded = action.payload.data.map(item => {
+                let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
+                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: false };
+            });
+            return { ...state, currentPage: action.payload.page, groups: [...state.groups, ...groupsLoaded], scrolling: false };
         case actions.LOAD_MORE_GROUPS_START:
             return { ...state, scrolling: true };
         case actions.LOAD_MORE_IMAGES_START:
             return { ...state, scrolling: true };
         case actions.LOAD_MORE_IMAGES_SUCCESS:
+            console.log(action);
+            if (action.payload.photos.length > 0) {
+                persistInDB(action.payload.photos, action.payload.nsid.nsid, 'loadmoreimages')
+            }
             return { ...state, scrolling: false, selectedGroupImages: [...state.selectedGroupImages, ...action.payload.photos] };
         default:
             return { ...state };
