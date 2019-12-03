@@ -39,7 +39,7 @@ GroupItem.propTypes = {
     title: PropTypes.string.isRequired,
     members: PropTypes.number.isRequired,
     photos: PropTypes.array.isRequired,
-    isFavorite: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.number.isRequired,
 }
 
 

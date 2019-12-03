@@ -57,7 +57,7 @@ PhotoItem.propTypes = {
     owner: PropTypes.string.isRequired,
     title: PropTypes.string,
     url: PropTypes.string,
-    isFavorite: PropTypes.bool.isRequired,
+    isFavorite: PropTypes.number.isRequired,
     makeFavorite:PropTypes.func.isRequired,
     removeFavorite:PropTypes.func.isRequired
 }

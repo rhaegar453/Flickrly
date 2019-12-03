@@ -320,3 +320,12 @@
   -ms-grid-column-span: 1;
   grid-column-end: span 1;
 }
+
+
+@media only screen and (min-width:992px){
+  .favorites{
+      display: flex;
+      margin-right: 100px;
+      justify-content: flex-end;
+  }
+}

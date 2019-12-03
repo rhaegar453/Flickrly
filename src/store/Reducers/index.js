@@ -32,7 +32,7 @@ const persistInDB = (payload, text, action) => {
         if (action == 'groups') {
             payload.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: false });
+                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: 0 });
             })
         }
         else if (action == 'search') {
@@ -43,18 +43,18 @@ const persistInDB = (payload, text, action) => {
         }
         else if (action == 'images') {
             payload.map(item => {
-                db.images.put({ groupid: text, ...item, isFavorite: false });
+                db.images.put({ groupid: text, ...item, isFavorite: 0 });
             })
         }
         else if (action == 'loadmoregroups') {
             payload.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: false });
+                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: 0 });
             })
         }
         else if (action = 'loadmoreimages') {
             payload.map(item => {
-                db.images.put({ groupid: text, ...item, isFavorite: false });
+                db.images.put({ groupid: text, ...item, isFavorite: 0 });
             });
         }
     }
@@ -101,7 +101,7 @@ const reducer = (state = initialState, action) => {
             }
             let groups = action.payload.data.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: false };
+                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: 0 };
             });
             return { ...state, loading: false, groups: groups }
         case actions.GET_GROUPS_GET_CACHE:
@@ -126,7 +126,7 @@ const reducer = (state = initialState, action) => {
             }
             let groupsLoaded = action.payload.data.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: false };
+                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: 0 };
             });
             return { ...state, currentPage: action.payload.page, groups: [...state.groups, ...groupsLoaded], scrolling: false };
         case actions.LOAD_MORE_GROUPS_START:
@@ -140,32 +140,32 @@ const reducer = (state = initialState, action) => {
             return { ...state, scrolling: false, selectedGroupImages: [...state.selectedGroupImages, ...action.payload.photos] };
 
         case actions.MAKE_GROUP_FAVORITE:
-            persistFavorite(action.payload, true, 'togglegroupfavorite');
+            persistFavorite(action.payload, 1, 'togglegroupfavorite');
             return {
                 ...state, groups: state.groups.map(item => {
                     if (item.groupid == action.payload) {
-                        return { ...item, isFavorite: true }
+                        return { ...item, isFavorite: 1 }
                     }
                     else return item;
                 })
             }
         case actions.REMOVE_GROUP_FAVORITE:
-            persistFavorite(action.payload, false, 'togglegroupfavorite');
+            persistFavorite(action.payload, 0, 'togglegroupfavorite');
             return {
                 ...state, groups: state.groups.map(item => {
                     if (item.groupid == action.payload) {
-                        return { ...item, isFavorite: false }
+                        return { ...item, isFavorite: 0 }
                     }
                     else return item;
                 })
             }
         case actions.MAKE_IMAGE_FAVORITE:
             console.log(action);
-            persistFavorite(action.payload, true, 'toggleimagesfavorite');
+            persistFavorite(action.payload, 1, 'toggleimagesfavorite');
             return {
                 ...state, selectedGroupImages: state.selectedGroupImages.map(item => {
                     if (item.photoid == action.payload) {
-                        return { ...item, isFavorite: true }
+                        return { ...item, isFavorite: 1 }
                     }
                     else {
                         return item;
@@ -173,11 +173,11 @@ const reducer = (state = initialState, action) => {
                 })
             }
         case actions.REMOVE_IMAGE_FAVORITE:
-            persistFavorite(action.payload, false, 'toggleimagesfavorite');
+            persistFavorite(action.payload, 0, 'toggleimagesfavorite');
             return {
                 ...state, selectedGroupImages: state.selectedGroupImages.map(item => {
                     if (item.photoid == action.payload) {
-                        return { ...item, isFavorite: false }
+                        return { ...item, isFavorite: 0 }
                     }
                     else {
                         return item;

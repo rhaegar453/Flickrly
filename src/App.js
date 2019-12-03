@@ -7,6 +7,8 @@ import GroupComponent from './Components/GroupsPage';
 import GalleryPage from './Components/GalleryPage';
 import HomePage from './Components/HomePage';
 import OverviewPage from './Components/OverviewPage';
+import FavoritesPage from './Components/FavoritesPage/Favorites';
+import FavoriteDetail from './Components/FavoriteDetail/FavoriteDetail';
 
 import db from './Helpers/Dexie';
 
@@ -21,10 +23,12 @@ class App extends React.Component {
       <div className='fontCss'>
         <Navbar />
         <Switch>
-          <Route path="/" exact={true}><HomePage/></Route>
+          <Route path="/" exact={true}><HomePage /></Route>
           <Route path="/gallery/:nsid"><GalleryPage /></Route>
           <Route path="/groups" exact={true}><GroupComponent /></Route>
           <Route path="/overview/:nsid" exact={true}><OverviewPage /></Route>
+          <Route path="/favorites" exact={true}><FavoritesPage /></Route>
+          <Route path="/favorites/:favpage"><FavoriteDetail/></Route>
         </Switch>
       </div>
     );
@@ -33,7 +37,7 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    groups: state.groups 
+    groups: state.groups
   }
 }
 

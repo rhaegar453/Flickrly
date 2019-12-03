@@ -23,7 +23,7 @@ let data1 = {
         'https://economictimes.indiatimes.com/img/66570640/Master.jpg',
         'https://assets.kpmg/content/dam/kpmg/xx/images/2019/08/lighted-houses-on-snow-covered-mountains-during-sunset-norway.jpg/jcr:content/renditions/cq5dam.web.512.341.jpg',
         'https://media.timeout.com/images/105237855/630/472/image.jpg'
-    ], makeFavorite: makeFavorite, removeFavorite: removeFavorite, isFavorite: false,
+    ], makeFavorite: makeFavorite, removeFavorite: removeFavorite, isFavorite: 0,
     groupid: 23
 }
 
@@ -38,7 +38,7 @@ let data2 = {
         'https://economictimes.indiatimes.com/img/66570640/Master.jpg',
         'https://assets.kpmg/content/dam/kpmg/xx/images/2019/08/lighted-houses-on-snow-covered-mountains-during-sunset-norway.jpg/jcr:content/renditions/cq5dam.web.512.341.jpg',
         'https://media.timeout.com/images/105237855/630/472/image.jpg'
-    ], makeFavorite: makeFavorite, removeFavorite: removeFavorite, isFavorite: true,
+    ], makeFavorite: makeFavorite, removeFavorite: removeFavorite, isFavorite: 1,
     groupid: 23
 }
 

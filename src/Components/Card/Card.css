@@ -1,0 +1,9 @@
+.centeredCss{
+    display: flex;
+    justify-content: center;
+}
+
+
+.marginate{
+    margin: 20px;
+}
