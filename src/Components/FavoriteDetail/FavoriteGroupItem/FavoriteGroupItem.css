@@ -1,0 +1,22 @@
+.centeredCss{
+    display: flex;
+    justify-content: center;
+}
+
+.makeCenter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item{
+    background-image: linear-gradient(to bottom, #492fce, #b82bc6);
+    border-radius: 24px;
+    display: inline-block;
+    margin: 10px;
+}
+
+.btnmod{
+    padding: 5px;
+    border-radius: 8px;
+}

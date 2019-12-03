@@ -40,7 +40,7 @@ class GroupPage extends React.Component {
     render() {
         return (
             <ScrollListener onBottom={() => this.loadMore()}>
-                <div>
+                <div className="container">
                     <div className="centeredCss" style={{ marginTop: '20px' }}>
                         <div className="col-md-4">
                             <Search />
