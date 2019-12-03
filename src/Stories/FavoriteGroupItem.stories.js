@@ -1,5 +1,5 @@
 import React from 'react';
-import FavoriteGroupItem from '../Components/FavoriteDetail/FavoriteGroupItem/FavoriteGroupItem';
+import FavoriteGroupItem from '../Components/FavoritesPage/FavoriteDetail/FavoriteGroupItem/FavoriteGroupItem';
 let faker = require('faker');
 let _ = require('lodash');
 

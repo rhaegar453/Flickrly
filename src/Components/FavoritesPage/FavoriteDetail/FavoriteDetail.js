@@ -1,11 +1,11 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { removeGroupFavorite, removeImageFavorite } from '../../store/Actions/index';
-import db from '../../Helpers/Dexie';
+import { removeGroupFavorite, removeImageFavorite } from '../../../store/Actions/index';
+import db from '../../../Helpers/Dexie';
 import GroupFavoriteItem from './FavoriteGroupItem/FavoriteGroupItem';
 import Masonry from 'react-masonry-component';
-import PhotoItem from '../PhotoItem/PhotoItem';
+import PhotoItem from '../../GalleryPage/PhotoItem/PhotoItem';
 import ZoomImage from 'react-medium-image-zoom';
 
 class FavoriteDetail extends React.Component {

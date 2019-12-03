@@ -4,8 +4,8 @@ import { ReactFragment } from 'react';
 import './PhotoItem.css';
 import ImageZoom from 'react-medium-image-zoom';
 import PropTypes from 'prop-types';
-import Modal from '../ModalComponent';
-import ModalButton from '../ModalButton';
+import Modal from '../../Modals/ModalComponent';
+import ModalButton from '../../Modals/ModalButton';
 
 
 
@@ -29,13 +29,13 @@ const PhotoItem = ({ photoid, views, comments, date, description, owner, title, 
                         <div>
                             <div className="centeredCss">
                                 <div style={{ textAlign: 'center' }} className="row rowItems">
-                                    <div><i class="fa fa-eye"></i> {views}</div>
-                                    <div><i class="fa fa-comments"></i>  {comments} </div>
-                                    <div><i class="fa fa-calendar"></i> {moment.unix(date).format('DD/MM/YYYY')} </div>
+                                    <div><i className="fa fa-eye"></i> {views}</div>
+                                    <div><i className="fa fa-comments"></i>  {comments} </div>
+                                    <div><i className="fa fa-calendar"></i> {moment.unix(date).format('DD/MM/YYYY')} </div>
                                 </div>
                             </div>
                             <div className="row centeredCss">
-                                {!isFavorite ? <button className="btn btn-danger" onClick={()=>makeFavorite(photoid)} style={{ marginBottom: "20px" }} title="Make Favorite"><i class="fa fa-heart"></i> Make Favorite</button> :
+                                {!isFavorite ? <button className="btn btn-danger" onClick={()=>makeFavorite(photoid)} style={{ marginBottom: "20px" }} title="Make Favorite"><i className="fa fa-heart"></i> Make Favorite</button> :
                                     <button className="btn btn-primary btn-log" onClick={()=>removeFavorite(photoid)} style={{ marginBottom: "20px" }}>Remove Favorite</button>}
                             </div>
                             <div className="centeredCss">
@@ -54,8 +54,8 @@ const PhotoItem = ({ photoid, views, comments, date, description, owner, title, 
 }
 
 PhotoItem.propTypes = {
-    photoid: PropTypes.number.isRequired,
-    views: PropTypes.number.isRequired,
+    photoid: PropTypes.string.isRequired,
+    views: PropTypes.string.isRequired,
     date: PropTypes.string.isRequired,
     description: PropTypes.string,
     owner: PropTypes.string.isRequired,

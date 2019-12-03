@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 
 const ModalComponent = ({ children, title, modalID }) => {
@@ -21,6 +22,12 @@ const ModalComponent = ({ children, title, modalID }) => {
             </div>
         </div>
     );
+}
+
+
+ModalComponent.propTypes={
+    title:PropTypes.string.isRequired, 
+    modalID:PropTypes.string.isRequired
 }
 
 export default ModalComponent;

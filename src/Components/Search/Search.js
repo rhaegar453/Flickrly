@@ -2,7 +2,7 @@ import React from 'react';
 import './SearchBox.css';
 import RecommendationItem from './RecommendationItem/RecommendationItem';
 import { connect } from 'react-redux';
-import * as actionCreators from '../store/Actions/index';
+import * as actionCreators from '../../store/Actions/index';
 import { withRouter } from 'react-router-dom';
 import { debounce , throttle} from 'lodash';
 import PropTypes from 'prop-types';

@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter} from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 const Card = ({title, iconClass, linkText, link, history}) => (
@@ -17,5 +18,12 @@ const Card = ({title, iconClass, linkText, link, history}) => (
         </div>
     </div>
 )
+
+Card.propTypes={
+    title:PropTypes.string.isRequired, 
+    iconClass:PropTypes.string.isRequired,
+    linkText:PropTypes.string.isRequired, 
+    link:PropTypes.string.isRequired
+}
 
 export default withRouter(Card);

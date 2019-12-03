@@ -3,12 +3,12 @@ import Navbar from './Components/Navbar';
 import './App.css';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
-import GroupComponent from './Components/GroupsPage';
-import GalleryPage from './Components/GalleryPage';
-import HomePage from './Components/HomePage';
+import GroupComponent from './Components/GroupPage/GroupsPage';
+import GalleryPage from './Components/GalleryPage/GalleryPage';
+import HomePage from './Components/HomePage/HomePage';
 import OverviewPage from './Components/OverviewPage';
 import FavoritesPage from './Components/FavoritesPage/Favorites';
-import FavoriteDetail from './Components/FavoriteDetail/FavoriteDetail';
+import FavoriteDetail from './Components/FavoritesPage/FavoriteDetail/FavoriteDetail';
 
 import db from './Helpers/Dexie';
 

@@ -1,14 +1,15 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import './SearchBox.css';
-import * as actionCreators from '../store/Actions/index';
+import '../Search/SearchBox.css';
+import * as actionCreators from '../../store/Actions/index';
 import PhotoItem from './PhotoItem/PhotoItem';
 import Scroller from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
 import Masonry from 'react-masonry-component';
 import ZoomImage from 'react-medium-image-zoom';
 
+import PropTypes from 'prop-types';
 
 
 
@@ -92,5 +93,18 @@ const mapDispatchToProps = (dispatch) => {
         removeImageFavorite:(data)=>dispatch(actionCreators.removeImageFavorite(data))
     }
 }
+
+GalleryPage.propTypes={
+    selectedGroupImages:PropTypes.array,
+    loading:PropTypes.bool,
+    selectedGroup:PropTypes.object,
+    scrolling:PropTypes.bool, 
+    getImagesForGroup:PropTypes.func.isRequired,
+    loadMoreImages:PropTypes.func.isRequired,
+    makeImageFavorite:PropTypes.func.isRequired,
+    makeImageFavorite:PropTypes.func.isRequired,
+    removeImageFavorite:PropTypes.func.isRequired
+}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GalleryPage));

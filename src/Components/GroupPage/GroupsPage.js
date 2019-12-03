@@ -1,16 +1,16 @@
 import React from 'react';
-import '../App.css';
+import '../../App.css';
 import { connect } from 'react-redux';
-import Search from './Search';
-import Chart from './Chart';
-import Modal from './ModalComponent';
-import ModalButton from './ModalButton';
-import { loadMoreGroups, selectGroup, makeGroupFavorite, removeGroupFavorite } from '../store/Actions/index';
-import { throttle, debounce, select } from 'redux-saga/effects';
+import Search from '../Search/Search';
+import Chart from '../Chart';
+import Modal from '../Modals/ModalComponent';
+import ModalButton from '../Modals/ModalButton';
+import { loadMoreGroups, selectGroup, makeGroupFavorite, removeGroupFavorite } from '../../store/Actions/index';
 import ScrollListener from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
 import GroupItem from './GroupItem/GroupItem';
 import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 
 class GroupPage extends React.Component {
@@ -84,5 +84,14 @@ const mapDispatchToProps = (dispatch) => {
         removeGroupFavorite:(data)=>dispatch(removeGroupFavorite(data))
     }
 }
+
+GroupPage.propTypes={
+    groups:PropTypes.array.isRequired, 
+    searchQuery:PropTypes.string, 
+    currentPage:PropTypes.number,
+    scrolling:PropTypes.bool, 
+    loading:PropTypes.bool
+}
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(GroupPage));

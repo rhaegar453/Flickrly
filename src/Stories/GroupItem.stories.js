@@ -1,5 +1,5 @@
 import React from 'react';
-import GroupItem from '../Components/GroupItem/GroupItem';
+import GroupItem from '../Components/GroupPage/GroupItem/GroupItem';
 
 export default { title: "Group Item" };
 

@@ -1,7 +1,7 @@
 import React from 'react';
-import PhotoItem from '../Components/PhotoItem/PhotoItem';
+import PhotoItem from '../Components/GalleryPage/PhotoItem/PhotoItem';
 import Masonry from 'react-masonry-component';
-import Modal from '../Components/ModalComponent';
+import Modal from '../Components/Modals/ModalComponent';
 let _=require('lodash');
 const faker=require('faker');
 
