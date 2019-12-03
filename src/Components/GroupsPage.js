@@ -5,7 +5,7 @@ import Search from './Search';
 import Chart from './Chart';
 import Modal from './ModalComponent';
 import ModalButton from './ModalButton';
-import { loadMoreGroups, selectGroup } from '../store/Actions/index';
+import { loadMoreGroups, selectGroup, makeGroupFavorite, removeGroupFavorite } from '../store/Actions/index';
 import { throttle, debounce, select } from 'redux-saga/effects';
 import ScrollListener from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
@@ -30,10 +30,12 @@ class GroupPage extends React.Component {
     }
 
     onMakeFavorite = (id) => {
-        console.log(id)
+        console.log('Making group favorite', id);
+        this.props.makeGroupFavorite(id);
     }
     onRemoveFavorite = (id) => {
-        console.log(id);
+        console.log("Remove group favorite ", id);
+        this.props.removeGroupFavorite(id);
     }
     render() {
         return (
@@ -77,7 +79,9 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadMore: (data, searchQuery) => dispatch(loadMoreGroups({ data, searchQuery })),
-        selectGroup: (data) => dispatch(selectGroup(data))
+        selectGroup: (data) => dispatch(selectGroup(data)), 
+        makeGroupFavorite:(data)=>dispatch(makeGroupFavorite(data)),
+        removeGroupFavorite:(data)=>dispatch(removeGroupFavorite(data))
     }
 }
 

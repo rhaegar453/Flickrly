@@ -54,8 +54,6 @@ const persistInDB = (payload, text, action) => {
         }
         else if (action = 'loadmoreimages') {
             payload.map(item => {
-                /*db.images.put({ groupid: text, ...item, isFavorite: false }); */
-                console.log(item);
                 db.images.put({ groupid: text, ...item, isFavorite: false });
             });
         }
@@ -65,6 +63,16 @@ const persistInDB = (payload, text, action) => {
     }
 }
 
+
+const persistFavorite = (data, value, action) => {
+    if (action == 'togglegroupfavorite') {
+        console.log('Persisting Group Favorite');
+        db.groups.update(data, { isFavorite: value });
+    }
+    else if (action = 'toggleimagesfavorite') {
+
+    }
+}
 
 
 
@@ -126,11 +134,35 @@ const reducer = (state = initialState, action) => {
         case actions.LOAD_MORE_IMAGES_START:
             return { ...state, scrolling: true };
         case actions.LOAD_MORE_IMAGES_SUCCESS:
-            console.log(action);
             if (action.payload.photos.length > 0) {
                 persistInDB(action.payload.photos, action.payload.nsid.nsid, 'loadmoreimages')
             }
             return { ...state, scrolling: false, selectedGroupImages: [...state.selectedGroupImages, ...action.payload.photos] };
+
+        case actions.MAKE_GROUP_FAVORITE:
+            persistFavorite(action.payload, true, 'togglegroupfavorite');
+            return {
+                ...state, groups: state.groups.map(item => {
+                    if (item.groupid == action.payload) {
+                        return { ...item, isFavorite: true }
+                    }
+                    else return item;
+                })
+            }
+        case actions.REMOVE_GROUP_FAVORITE:
+            persistFavorite(action.payload, false, 'togglegroupfavorite');
+            return {
+                ...state, groups: state.groups.map(item => {
+                    if (item.groupid == action.payload) {
+                        return { ...item, isFavorite: false }
+                    }
+                    else return item;
+                })
+            }
+        case actions.MAKE_IMAGE_FAVORITE:
+            return { ...state }
+        case actions.REMOVE_IMAGE_FAVORITE:
+            return { ...state }
         default:
             return { ...state };
     }

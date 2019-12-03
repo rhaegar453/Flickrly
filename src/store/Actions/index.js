@@ -56,3 +56,11 @@ export const loadMoreImagesGetCache=(data)=>({type:actions.LOAD_MORE_IMAGES_GET_
 let {SELECT_GROUP} =actions;
 
 export const selectGroup=(data)=>({type:SELECT_GROUP, payload:data});
+
+
+export const makeGroupFavorite=(data)=>({type:actions.MAKE_GROUP_FAVORITE, payload:data});
+export const removeGroupFavorite=(data)=>({type:actions.REMOVE_GROUP_FAVORITE, payload:data});
+export const makeImageFavorite=(data)=>({type:actions.MAKE_IMAGE_FAVORITE, payload:data});
+export const removeImageFavorite=(data)=>({type:actions.REMOVE_IMAGE_FAVORITE, payload:data});
+
+
