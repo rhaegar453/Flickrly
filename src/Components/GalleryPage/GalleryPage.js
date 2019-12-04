@@ -3,13 +3,12 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import '../Search/SearchBox.css';
 import * as actionCreators from '../../store/Actions/index';
-import PhotoItem from './PhotoItem/PhotoItem';
 import Scroller from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
 import Masonry from 'react-masonry-component';
 import ZoomImage from 'react-medium-image-zoom';
-
 import PropTypes from 'prop-types';
+import PhotoItem from './PhotoItem/PhotoItem';
 
 
 

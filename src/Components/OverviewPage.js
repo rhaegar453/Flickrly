@@ -1,15 +1,10 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 /* import { PieChart, Pie, Legend, Tooltip, } from 'recharts'; */
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { chunk, flatten } from 'lodash';
-import PieChart from './PieChart';
 
-var data02 = [
-    { name: 'Group A', value: 2400 }, { name: 'Group B', value: 4567 },
-    { name: 'Group C', value: 1398 }, { name: 'Group D', value: 9800 },
-    { name: 'Group E', value: 3908 }, { name: 'Group F', value: 4800 },
-];
+const PieChart=React.lazy(()=>import('./PieChart'));
 
 class OverviewPage extends React.Component {
     constructor(props) {
@@ -56,11 +51,11 @@ class OverviewPage extends React.Component {
 
                     <div className="col0md-4 col-sd-12">
                         <h1  style={{textAlign:'center'}}>Comments Chart</h1>
-                        <PieChart data={this.state.dataByComments} label="comments" ></PieChart>
+                        <Suspense fallback={<div>Loading...</div>}><PieChart data={this.state.dataByComments} label="comments" ></PieChart></Suspense>
                     </div>
                     <div className="col-md-4 col-sd-12">
                         <h1  style={{textAlign:'center'}}>Likes Chart</h1>
-                        <PieChart data={this.state.dataByViews} label="likes" ></PieChart>
+                        <Suspense fallback={<div>Loading...</div>}><PieChart data={this.state.dataByViews} label="likes" ></PieChart></Suspense>
                     </div>
                 </div>
             </div>

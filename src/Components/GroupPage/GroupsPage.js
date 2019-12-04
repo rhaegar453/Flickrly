@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import '../../App.css';
 import { connect } from 'react-redux';
-import Search from '../Search/Search';
-import Chart from '../Chart';
-import Modal from '../Modals/ModalComponent';
-import ModalButton from '../Modals/ModalButton';
 import { loadMoreGroups, selectGroup, makeGroupFavorite, removeGroupFavorite } from '../../store/Actions/index';
 import ScrollListener from 'react-bottom-scroll-listener';
 import { SpinLoader } from 'react-css-loaders';
-import GroupItem from './GroupItem/GroupItem';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
+const GroupItem = React.lazy(() => import('./GroupItem/GroupItem'));
+const Search = React.lazy(() => import('../Search/Search'));
+const Chart = React.lazy(() => import('../Chart'));
+const Modal = React.lazy(() => import('../Modals/ModalComponent'));
+const ModalButton = React.lazy(() => import('../Modals/ModalButton'));
+
+
+
 
 
 class GroupPage extends React.Component {
@@ -43,21 +47,27 @@ class GroupPage extends React.Component {
                 <div className="container">
                     <div className="centeredCss" style={{ marginTop: '20px' }}>
                         <div className="col-md-4">
-                            <Search />
+                            <Suspense fallback={<div>Loading...</div>}>
+                                <Search />
+                            </Suspense>
                         </div>
                     </div>
                     {this.props.groups.length > 0 ? <div className="container marginate">
                         <h1><u>Results</u></h1>
-                        <div className="centeredCss">
-                            <ModalButton id="Hello" name="View Chart" />
-                            <Modal modalID="Hello" title="First Modal">
-                                <Chart data={this.props.groups} />
-                            </Modal>
-                        </div>
+                        <Suspense fallback={<div>Loading...</div>}>
+                            <div className="centeredCss">
+                                <ModalButton id="Hello" name="View Chart" />
+                                <Modal modalID="Hello" title="First Modal">
+                                    <Chart data={this.props.groups} />
+                                </Modal>
+                            </div>
+                        </Suspense>
                         <div className="w-layout-grid grid">
-                            {this.props.groups.map(item => (
-                                <GroupItem groupid={item.groupid} makeFavorite={this.onMakeFavorite} removeFavorite={this.onRemoveFavorite} iconURL={item.icon} onClick={() => this.selectGroup(item)} isFavorite={item.isFavorite} key={item.groupid} members={parseInt(item.members)} photos={item.photos} title={item.name} />
-                            ))}
+                            <Suspense fallback={<div>Loading...</div>}>
+                                {this.props.groups.map(item => (
+                                    <GroupItem groupid={item.groupid} makeFavorite={this.onMakeFavorite} removeFavorite={this.onRemoveFavorite} iconURL={item.icon} onClick={() => this.selectGroup(item)} isFavorite={item.isFavorite} key={item.groupid} members={parseInt(item.members)} photos={item.photos} title={item.name} />
+                                ))}
+                            </Suspense>
                             {this.props.scrolling ? <SpinLoader /> : null}
                         </div>
                     </div> : null}
@@ -79,18 +89,18 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         loadMore: (data, searchQuery) => dispatch(loadMoreGroups({ data, searchQuery })),
-        selectGroup: (data) => dispatch(selectGroup(data)), 
-        makeGroupFavorite:(data)=>dispatch(makeGroupFavorite(data)),
-        removeGroupFavorite:(data)=>dispatch(removeGroupFavorite(data))
+        selectGroup: (data) => dispatch(selectGroup(data)),
+        makeGroupFavorite: (data) => dispatch(makeGroupFavorite(data)),
+        removeGroupFavorite: (data) => dispatch(removeGroupFavorite(data))
     }
 }
 
-GroupPage.propTypes={
-    groups:PropTypes.array.isRequired, 
-    searchQuery:PropTypes.string, 
-    currentPage:PropTypes.number,
-    scrolling:PropTypes.bool, 
-    loading:PropTypes.bool
+GroupPage.propTypes = {
+    groups: PropTypes.array.isRequired,
+    searchQuery: PropTypes.string,
+    currentPage: PropTypes.number,
+    scrolling: PropTypes.bool,
+    loading: PropTypes.bool
 }
 
 

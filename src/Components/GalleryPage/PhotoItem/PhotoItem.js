@@ -2,10 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import { ReactFragment } from 'react';
 import './PhotoItem.css';
-import ImageZoom from 'react-medium-image-zoom';
 import PropTypes from 'prop-types';
-import Modal from '../../Modals/ModalComponent';
-import ModalButton from '../../Modals/ModalButton';
 
 
 
@@ -35,11 +32,11 @@ const PhotoItem = ({ photoid, views, comments, date, description, owner, title, 
                                 </div>
                             </div>
                             <div className="row centeredCss">
-                                {!isFavorite ? <button className="btn btn-danger" onClick={()=>makeFavorite(photoid)} style={{ marginBottom: "20px" }} title="Make Favorite"><i className="fa fa-heart"></i> Make Favorite</button> :
-                                    <button className="btn btn-primary btn-log" onClick={()=>removeFavorite(photoid)} style={{ marginBottom: "20px" }}>Remove Favorite</button>}
+                                {!isFavorite ? <button className="btn btn-danger" onClick={() => makeFavorite(photoid)} style={{ marginBottom: "20px" }} title="Make Favorite"><i className="fa fa-heart"></i> Make Favorite</button> :
+                                    <button className="btn btn-primary btn-log" onClick={() => removeFavorite(photoid)} style={{ marginBottom: "20px" }}>Remove Favorite</button>}
                             </div>
                             <div className="centeredCss">
-                                 <button className="btn btn-success" style={{padding:'5px'}} onClick={()=>openImage(url)}>Open Image</button>
+                                <button className="btn btn-success" style={{ padding: '5px' }} onClick={() => openImage(url)}>Open Image</button>
                             </div>
                         </div>
                     </div>
@@ -48,7 +45,6 @@ const PhotoItem = ({ photoid, views, comments, date, description, owner, title, 
                     <img src={url} className="photoimage" onError={handleImageError} style={{ borderRadius: "24px" }}></img>
                 </div>
             </div>
-            <Modal modalID="myModal"><h1>Hello World</h1></Modal>
         </div>
     );
 }
@@ -62,9 +58,9 @@ PhotoItem.propTypes = {
     title: PropTypes.string,
     url: PropTypes.string,
     isFavorite: PropTypes.number.isRequired,
-    makeFavorite:PropTypes.func,
-    removeFavorite:PropTypes.func.isRequired, 
-    openImage:PropTypes.func.isRequired
+    makeFavorite: PropTypes.func,
+    removeFavorite: PropTypes.func.isRequired,
+    openImage: PropTypes.func.isRequired
 }
 
 export default PhotoItem; 

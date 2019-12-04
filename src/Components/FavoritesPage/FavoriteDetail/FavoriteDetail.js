@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { removeGroupFavorite, removeImageFavorite } from '../../../store/Actions/index';
 import db from '../../../Helpers/Dexie';
-import GroupFavoriteItem from './FavoriteGroupItem/FavoriteGroupItem';
 import Masonry from 'react-masonry-component';
-import PhotoItem from '../../GalleryPage/PhotoItem/PhotoItem';
 import ZoomImage from 'react-medium-image-zoom';
+import PhotoItem from '../../GalleryPage/PhotoItem/PhotoItem';
+const GroupFavoriteItem = React.lazy(() => import('./FavoriteGroupItem/FavoriteGroupItem'));
+
+
 
 class FavoriteDetail extends React.Component {
     constructor(props) {
@@ -56,11 +58,13 @@ class FavoriteDetail extends React.Component {
         return (
             <div className="container">
                 {this.state.page == 'groups' ? <div>
-                    <Masonry>
-                        {this.state.data.map(item => (
-                            <GroupFavoriteItem groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
-                        ))}
-                    </Masonry>
+                    <Suspense fallback={<div>Loading...</div>}>
+                        <Masonry>
+                            {this.state.data.map(item => (
+                                <GroupFavoriteItem groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
+                            ))}
+                        </Masonry>
+                    </Suspense>
                 </div> :
                     <Masonry>
                         {this.state.data.map(item => (
