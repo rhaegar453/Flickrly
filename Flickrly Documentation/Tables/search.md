@@ -1,0 +1,3 @@
+# search
+
+Indexes: groupid, text

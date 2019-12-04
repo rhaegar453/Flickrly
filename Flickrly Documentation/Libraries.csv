@@ -1,0 +1,17 @@
+﻿Name,Purpose
+Libraries/Redux%20Saga.md,Redux Middleware library
+Libraries/Axios.md,For making HTTP requests
+Libraries/Bootstrap.md,UI Library
+Libraries/Dexiejs.md,Wrapper for IndexedDB
+Libraries/Faker.md,Generating fake data for Testing components
+Libraries/Font%20Awesome.md,UI Library for Icons
+Libraries/Lodash.md,For data manipulations and generation
+Libraries/Moment.md,Date manipulation
+Libraries/react%20bottom%20scroll%20listener.md,Listening for scroll bottom reach events
+Libraries/React%20css%20loaders.md,Css Loaders
+Libraries/React%20masonry%20component.md,To form Staggered views of photos
+Libraries/React%20medium%20image%20zoom.md,Component to zoom images
+Libraries/Reaviz.md,Graphs
+Libraries/Recharts%20Reaviz.md,Graphs
+Libraries/Storybook.md,Test individual Components in isolation
+Libraries/Untitled.md,

@@ -1,0 +1,4 @@
+﻿Name,Indexes
+Tables/groups.md,"groupid, isFavorite, text"
+Tables/search.md,"groupid, text"
+Tables/images.md,"groupid, isFavorite, photoid"

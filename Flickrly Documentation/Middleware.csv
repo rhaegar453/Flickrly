@@ -1,0 +1,4 @@
+﻿Name,Purpose
+Middleware/Search%20Group%20Cache%20Check.md,To check and get any recommendations corresponding to the current search query from the cache (IndexedDB)
+Middleware/Get%20Groups%20Cache%20Check.md,"To check and get any groups for the corresponding search query from the cache "
+Middleware/Get%20Images%20for%20Group%20Check%20Cache.md,To check and get any images corresponding to the selected group from the cache

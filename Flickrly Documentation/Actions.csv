@@ -1,0 +1,11 @@
+﻿Name,Purpose
+Actions/Search%20Groups.md,Action for recommendation of groups with a given query in the search box
+Actions/Get%20Groups.md,"Action to get groups for a given search query. "
+Actions/Get%20Images%20for%20Group.md,Action to fetch the images of a group when a certain group is selected
+Actions/Load%20More%20Groups.md,Action to load more groups when the user reaches the end of the page
+Actions/Load%20More%20Images.md,Action to load more images when the user reaches the end of the page
+Actions/Make%20group%20favorite.md,Action to make a particular group favorite
+Actions/Remove%20Group%20Favorite.md,Action to remove a particular group from favorites
+Actions/Make%20image%20favorite.md,Action to make a particular image favorite
+Actions/Remove%20Image%20Favorite.md,Action to remove a particular image from favorites
+Actions/Select%20Group.md,Action to select a particular group to load its images

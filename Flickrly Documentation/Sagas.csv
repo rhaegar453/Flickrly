@@ -1,0 +1,6 @@
+﻿Name,Purpose
+Sagas/Get%20Groups.md,To get the groups for a search query
+Sagas/Search%20Groups.md,To get recommendations for a search query
+Sagas/Get%20Images%20for%20Group.md,To get images for a selected group
+Sagas/Load%20More%20Groups.md,To load more groups when the user reaches the bottom of the page
+Sagas/Load%20More%20Images.md,To load more images when the user reaches the bottom of the page
