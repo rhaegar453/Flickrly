@@ -58,16 +58,16 @@ class FavoriteDetail extends React.Component {
                 {this.state.page == 'groups' ? <div>
                     <Suspense fallback={<div>Loading...</div>}>
                         {this.state.data.length == 0 ? <div>No groups here</div> : <Masonry>
-                            {this.state.data.map(item => (
-                                <GroupFavoriteItem key={item.photoid} groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
+                            {this.state.data.map((item, index) => (
+                                <GroupFavoriteItem key={index} groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
                             ))}
                         </Masonry>}
                     </Suspense>
                 </div> :
                     <div>
                         {this.state.data.length == 0 ? <div>No photos here</div> : <Masonry>
-                            {this.state.data.map(item => (
-                                <PhotoItem {...item} key={item.groupid} removeFavorite={this.removeFavoriteImage} openImage={this.onImageZoom} />
+                            {this.state.data.map((item, index) => (
+                                <PhotoItem {...item} key={index} removeFavorite={this.removeFavoriteImage} openImage={this.onImageZoom} />
                             ))}
                         </Masonry>}
                     </div>
