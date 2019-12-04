@@ -42,6 +42,7 @@ class GroupPage extends React.Component {
     render() {
         return (
             <ScrollListener onBottom={() => this.loadMore()}>
+                {console.log(this.props.groups)}
                 <div className="container">
                     <div className="centeredCss" style={{ marginTop: '20px' }}>
                         <div className="col-md-4">
@@ -94,7 +95,16 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 GroupPage.propTypes = {
-    groups: PropTypes.array.isRequired,
+    groups: PropTypes.arrayOf(PropTypes.shape({
+        groupid:PropTypes.string,
+        icon:PropTypes.string,
+        isFavorite:PropTypes.oneOf([1,0]),
+        members:PropTypes.string,
+        name:PropTypes.string,
+        photos:PropTypes.arrayOf(PropTypes.shape({id:PropTypes.string, url:PropTypes.string})),
+        text:PropTypes.string,
+        total:PropTypes.number
+    })),
     searchQuery: PropTypes.string,
     currentPage: PropTypes.number,
     scrolling: PropTypes.bool,

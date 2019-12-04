@@ -38,8 +38,8 @@ GroupItem.propTypes = {
     iconURL: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     members: PropTypes.number.isRequired,
-    photos: PropTypes.array.isRequired,
-    isFavorite: PropTypes.number.isRequired,
+    photos: PropTypes.arrayOf(PropTypes.shape({id:PropTypes.string, url:PropTypes.string})),
+    isFavorite: PropTypes.oneOf([1,0]),
 }
 
 

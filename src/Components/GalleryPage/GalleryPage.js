@@ -9,6 +9,7 @@ import Masonry from 'react-masonry-component';
 import ZoomImage from 'react-medium-image-zoom';
 import PropTypes from 'prop-types';
 import PhotoItem from './PhotoItem/PhotoItem';
+import { prototype } from 'events';
 
 
 
@@ -55,6 +56,7 @@ class GalleryPage extends React.Component {
     render() {
         return (
             <Scroller onBottom={this.reachedBottom} offset={800}>
+                {console.log(this.props.selectedGroup)}
                 <div className="container" style={{ marginTop: '10px' }}>
                     {this.props.selectedGroup ? <h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5> : null}
                     <div className="centeredCss" style={{margin:'30px'}}>
@@ -92,9 +94,30 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 GalleryPage.propTypes = {
-    selectedGroupImages: PropTypes.array,
+    selectedGroupImages: PropTypes.arrayOf(PropTypes.shape({
+        comments:PropTypes.string, 
+        date:PropTypes.string,
+        description:PropTypes.string,
+        groupid:PropTypes.string,
+        isFavorite:PropTypes.oneOf([1,0]),
+        likes:PropTypes.number,
+        owner:PropTypes.string,
+        photoid:PropTypes.string,
+        title:PropTypes.string,
+        url:PropTypes.string,
+        views:PropTypes.string
+    })),
     loading: PropTypes.bool,
-    selectedGroup: PropTypes.object,
+    selectedGroup: PropTypes.objectOf(PropTypes.shape({
+        groupid:PropTypes.string,
+        icon:PropTypes.string,
+        isFavorite:PropTypes.oneOf([1,0]),
+        members:PropTypes.string, 
+        name:PropTypes.string,
+        photos:PropTypes.array,
+        text:PropTypes.string, 
+        total:PropTypes.number
+    })),
     scrolling: PropTypes.bool,
     getImagesForGroup: PropTypes.func.isRequired,
     loadMoreImages: PropTypes.func.isRequired,

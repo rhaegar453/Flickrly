@@ -6,9 +6,6 @@ import PropTypes from 'prop-types';
 const Card = React.lazy(() => import('./Card/Card'));
 
 
-
-
-let backgroundImage = "https://images.unsplash.com/photo-1513151233558-d860c5398176?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
 const Favorites = () => (
     <div className="background">
         <div className="container" style={{ height: '100%' }}>
