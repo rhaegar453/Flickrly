@@ -57,18 +57,20 @@ class FavoriteDetail extends React.Component {
             <div className="container">
                 {this.state.page == 'groups' ? <div>
                     <Suspense fallback={<div>Loading...</div>}>
-                        <Masonry>
+                        {this.state.data.length == 0 ? <div>No groups here</div> : <Masonry>
                             {this.state.data.map(item => (
                                 <GroupFavoriteItem key={item.photoid} groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
                             ))}
-                        </Masonry>
+                        </Masonry>}
                     </Suspense>
                 </div> :
-                    <Masonry>
-                        {this.state.data.map(item => (
-                            <PhotoItem {...item} key={item.groupid} removeFavorite={this.removeFavoriteImage} openImage={this.onImageZoom} />
-                        ))}
-                    </Masonry>
+                    <div>
+                        {this.state.data.length == 0 ? <div>No photos here</div> : <Masonry>
+                            {this.state.data.map(item => (
+                                <PhotoItem {...item} key={item.groupid} removeFavorite={this.removeFavoriteImage} openImage={this.onImageZoom} />
+                            ))}
+                        </Masonry>}
+                    </div>
                 }
                 {this.state.isZoomed && this.state.selectedImage ? <ZoomImage isZoomed={true} onUnzoom={this.onImageUnzoom} image={{ src: this.state.selectedImage }}></ZoomImage> : null}
             </div>
@@ -83,9 +85,9 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-FavoriteDetail.propTypes={
-    removeFavorite:PropTypes.func.isRequired, 
-    removeFavoriteImage:PropTypes.func.isRequired
+FavoriteDetail.propTypes = {
+    removeFavorite: PropTypes.func.isRequired,
+    removeFavoriteImage: PropTypes.func.isRequired
 }
 
 
