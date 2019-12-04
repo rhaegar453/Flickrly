@@ -7,19 +7,21 @@ import PropTypes from 'prop-types';
 
 const HomeComponent = ({ history }) => {
     return (
-        <div className="centeredCss">
-            <div>
-                <h1 className="centeredCss">Welcome to FlickrLy</h1>
-                <div className="centeredCss">
-                    <button className="btn btn-primary btn-success" style={{ marginTop: "45px" }} onClick={() => history.push('/groups')}>Go to Groups</button>
+        <div class="section-2">
+            <div class="container-2 w-container">
+                <div class="div-block-25">
+                    <div>
+                        <h1 class="heading-4">FlickrLy</h1>
+                        <button className="btn btn-block btn-lg btn-danger" onClick={()=>history.push('/groups')}>Go to Groups</button>
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
 
-HomeComponent.propTypes={
-    history:PropTypes.object.isRequired
+HomeComponent.propTypes = {
+    history: PropTypes.object.isRequired
 }
 
 export default withRouter(HomeComponent);

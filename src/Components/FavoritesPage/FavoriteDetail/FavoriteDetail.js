@@ -63,7 +63,7 @@ class FavoriteDetail extends React.Component {
                     <Suspense fallback={<div>Loading...</div>}>
                         <Masonry>
                             {this.state.data.map(item => (
-                                <GroupFavoriteItem key={item.groupid} groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
+                                <GroupFavoriteItem key={item.photoid} groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
                             ))}
                         </Masonry>
                     </Suspense>
