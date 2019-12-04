@@ -16,13 +16,6 @@ const initialState = {
     scrolling: false
 }
 
-const persistInLocalStorage = (arr, key) => {
-    let localData = JSON.parse(localStorage.getItem(key));
-    let totalData = [...arr, ...localData];
-    let newData = uniqBy(totalData, (e) => e.url);
-    console.log(newData);
-    localStorage.setItem(key, JSON.stringify(newData));
-}
 
 
 
@@ -32,7 +25,7 @@ const persistInDB = (payload, text, action) => {
         if (action == 'groups') {
             payload.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: 0 });
+                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: 0, total: parseInt(item.total) });
             })
         }
         else if (action == 'search') {
@@ -49,7 +42,7 @@ const persistInDB = (payload, text, action) => {
         else if (action == 'loadmoregroups') {
             payload.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: 0 });
+                db.groups.put({ groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: text, isFavorite: 0, total: parseInt(item.total) });
             })
         }
         else if (action = 'loadmoreimages') {
@@ -66,7 +59,6 @@ const persistInDB = (payload, text, action) => {
 
 const persistFavorite = (data, value, action) => {
     if (action == 'togglegroupfavorite') {
-        console.log('Persisting Group Favorite');
         db.groups.update(data, { isFavorite: value });
     }
     else if (action = 'toggleimagesfavorite') {
@@ -96,12 +88,13 @@ const reducer = (state = initialState, action) => {
         case actions.GET_GROUPS_START:
             return { ...state, loading: true }
         case actions.GET_GROUPS_SUCCESS:
+            console.log(action.payload);
             if (action.payload.text.length > 0) {
                 persistInDB(action.payload.data, action.payload.text, 'groups');
             }
             let groups = action.payload.data.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: 0 };
+                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: 0, total: parseInt(item.total) };
             });
             return { ...state, loading: false, groups: groups }
         case actions.GET_GROUPS_GET_CACHE:
@@ -126,7 +119,7 @@ const reducer = (state = initialState, action) => {
             }
             let groupsLoaded = action.payload.data.map(item => {
                 let iconUrl = `http://farm${item.iconfarm}.staticflickr.com/${item.iconserver}/buddyicons/${item.nsid}.jpg`;
-                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: 0 };
+                return { groupid: item.nsid, icon: iconUrl, name: item.name, photos: item.photos, members: item.members, text: action.payload.text, isFavorite: 0, total: parseInt(item.total) };
             });
             return { ...state, currentPage: action.payload.page, groups: [...state.groups, ...groupsLoaded], scrolling: false };
         case actions.LOAD_MORE_GROUPS_START:
@@ -160,7 +153,6 @@ const reducer = (state = initialState, action) => {
                 })
             }
         case actions.MAKE_IMAGE_FAVORITE:
-            console.log(action);
             persistFavorite(action.payload, 1, 'toggleimagesfavorite');
             return {
                 ...state, selectedGroupImages: state.selectedGroupImages.map(item => {

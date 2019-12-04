@@ -17,7 +17,7 @@ const GroupItem = ({ groupid, iconURL, title, members, photos, makeFavorite, rem
                 <div onClick={onClick}>
                     <div className="div-block-6"><img style={{ borderRadius: '20px', marginTop: '20px' }} src={iconURL} width="69" alt=""></img></div>
                     <div className="div-block-7">
-                        <h4 style={{ padding: '15px' }}>{title}</h4>
+                        <h4 style={{ padding: '15px' , fontWeight:'bold'}}>{title}</h4>
                     </div>
                     <div>
                         <p className="paragraph">Members: {members}</p>

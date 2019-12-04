@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import RecommendationItem from '../Components/RecommendationItem/RecommendationItem';
+import RecommendationItem from '../Components/Search/RecommendationItem/RecommendationItem';
 
 
 const iconUrl="https://www.freeiconspng.com/uploads/flat-blue-home-icon-4.png";

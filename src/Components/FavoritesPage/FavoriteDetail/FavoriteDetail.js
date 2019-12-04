@@ -30,21 +30,17 @@ class FavoriteDetail extends React.Component {
     async componentDidMount() {
         if (this.state.page == 'groups') {
             let data = await db.groups.where('isFavorite').equals(1).toArray();
-            console.log(data);
             this.setState({ data });
         } else {
             let data = await db.images.where('isFavorite').equals(1).toArray();
-            console.log(data);
             this.setState({ data });
         }
     }
     removeGroupFavorite = (data) => {
-        console.log(data);
         this.props.removeFavorite(data);
         this.setState({ data: this.state.data.filter(item => item.groupid != data) })
     }
     removeFavoriteImage = (data) => {
-        console.log("Removing favorite image ", data);
         this.setState({ data: this.state.data.filter(item => item.photoid != data) });
         this.props.removeFavoriteImage(data);
     }

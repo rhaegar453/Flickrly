@@ -74,8 +74,6 @@ function* getImagesForGroup(action) {
         let modified = yield all(groupData.photos.map(async item => {
             let photoInfoUrl = `https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=2f3d9d105879101fe5df7e5c9718a1ad&photo_id=${item.id}&format=json&nojsoncallback=1`;
             let data = await axios.get(photoInfoUrl);
-            console.log("Checking for isfavorite");
-            console.log(data);
             return { photoid: item.id, title: data.data.photo.title._content, description: data.data.photo.description._content, likes: parseInt(data.data.photo.isfavorite), url: createImageURL({ farmid: data.data.photo.farm, id: item.id, serverid: data.data.photo.server, secret: data.data.photo.secret }), comments: data.data.photo.comments._content, owner: data.data.photo.owner.username, views: data.data.photo.views, date: data.data.photo.dateuploaded };
         }));
         yield put(actionCreators.getImagesForGroupSuccess({ data: modified, text: action.payload }));
@@ -122,7 +120,6 @@ function* loadMoreGroups(action) {
 
 function* loadMoreImages(action) {
     try {
-        console.log(action);
         yield put(actionCreators.loadMoreImagesStart());
         let loadMoreUrl = `https://www.flickr.com/services/rest/?method=flickr.groups.pools.getPhotos&api_key=2f3d9d105879101fe5df7e5c9718a1ad&group_id=${action.payload.nsid}&per_page=10&page=${action.payload.page}&format=json&nojsoncallback=1`;
         let data = yield axios.get(loadMoreUrl);

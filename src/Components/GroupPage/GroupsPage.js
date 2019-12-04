@@ -34,11 +34,9 @@ class GroupPage extends React.Component {
     }
 
     onMakeFavorite = (id) => {
-        console.log('Making group favorite', id);
         this.props.makeGroupFavorite(id);
     }
     onRemoveFavorite = (id) => {
-        console.log("Remove group favorite ", id);
         this.props.removeGroupFavorite(id);
     }
     render() {
@@ -55,7 +53,7 @@ class GroupPage extends React.Component {
                     {this.props.groups.length > 0 ? <div className="container marginate">
                         <h1><u>Results</u></h1>
                         <Suspense fallback={<div>Loading...</div>}>
-                            <div className="centeredCss">
+                            <div className="centeredCss" style={{marginBottom:'30px'}}>
                                 <ModalButton id="Hello" name="View Chart" />
                                 <Modal modalID="Hello" title="First Modal">
                                     <Chart data={this.props.groups} />

@@ -5,7 +5,7 @@ import '../App.css';
 const Navbar = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light">
-            <Link className="navbar-brand" to="/"><h2 class="heading-5">FlickrLy</h2></Link>
+            <Link className="navbar-brand" to="/"><h2 className="heading-5">FlickrLy</h2></Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>
             </button>

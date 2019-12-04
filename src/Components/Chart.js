@@ -3,14 +3,15 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } fro
 
 const Chart = ({data}) => {
     console.log(data);
+    let final=data.map(item=>({name:item.name, value:item.total}));
     return (
         <div>
             <BarChart
                 width={400}
                 height={300}
-                data={data.map(item => {
+                data={final.map(item => {
                     if (item) {
-                        return { name: item.name, Photos: parseInt(item.total) }
+                        return { name: item.name, Photos: parseInt(item.value) }
                     }
                 })}
                 margin={{

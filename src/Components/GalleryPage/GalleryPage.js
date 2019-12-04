@@ -22,7 +22,6 @@ class GalleryPage extends React.Component {
         }
     }
     componentDidMount() {
-        console.log("Mounting the component now");
         let data = this.props.history.location.pathname.split('/');
         let groupid = data[data.length - 1];
         this.props.getImagesForGroup(groupid);
@@ -40,17 +39,12 @@ class GalleryPage extends React.Component {
     }
 
     makeFavorite = (data) => {
-        console.log("Making this image favorite");
-        console.log(data)
         this.props.makeImageFavorite(data);
     }
     removeFavorite = (data) => {
-        console.log("Removing this image from favorites");
-        console.log(data);
         this.props.removeImageFavorite(data);
     }
     handleZoom=(url)=>{
-        console.log(url);
         this.setState({selectedImage:url,isZoomed:true});
     }
     handleUnzoom=()=>{
