@@ -14,7 +14,7 @@ const handleImageError = (e) => {
 
 const PhotoItem = ({ photoid, views, comments, date, description, owner, title, url, isFavorite, makeFavorite, removeFavorite, openImage }) => {
     return (
-        <div className="col-md-3 col-sm-6 col-xs-6 myPos">
+        <div className="col-md-4 col-sm-6 col-xs-6 myPos centeredCss">
             <div className="imageBackground">
                 <div className="imageDescription">
                     <div className="scrollview">

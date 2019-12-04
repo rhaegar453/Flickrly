@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 
 const HomeComponent = ({ history }) => {
     return (
-        <div class="section-2">
-            <div class="container-2 w-container">
-                <div class="div-block-25">
+        <div className="section-2">
+            <div className="container-2 w-container">
+                <div className="div-block-25">
                     <div>
-                        <h1 class="heading-4">FlickrLy</h1>
+                        <h1 className="heading-4">FlickrLy</h1>
                         <button className="btn btn-block btn-lg mybutton"  onClick={()=>history.push('/groups')}>Go to Groups</button>
                     </div>
                 </div>

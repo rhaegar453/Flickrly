@@ -16,9 +16,9 @@ class GalleryPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentPage: 1, 
-            isZoomed:false, 
-            selectedImage:null
+            currentPage: 1,
+            isZoomed: false,
+            selectedImage: null
         }
     }
     componentDidMount() {
@@ -32,6 +32,7 @@ class GalleryPage extends React.Component {
         this.props.history.push(`/overview/${nsid}`, { name: "Hello World" });
     }
     reachedBottom = () => {
+        console.log("Reached the bottom")
         let data = this.props.history.location.pathname.split('/');
         let groupid = data[data.length - 1];
         this.props.loadMoreImages(groupid, this.state.currentPage + 1);
@@ -44,17 +45,17 @@ class GalleryPage extends React.Component {
     removeFavorite = (data) => {
         this.props.removeImageFavorite(data);
     }
-    handleZoom=(url)=>{
-        this.setState({selectedImage:url,isZoomed:true});
+    handleZoom = (url) => {
+        this.setState({ selectedImage: url, isZoomed: true });
     }
-    handleUnzoom=()=>{
-        this.setState({isZoomed:false});
+    handleUnzoom = () => {
+        this.setState({ isZoomed: false });
     }
 
     render() {
         return (
-            <div className="container" style={{ marginTop: '10px' }}>
-                <Scroller onBottom={this.reachedBottom}>
+            <Scroller onBottom={this.reachedBottom} offset={800}>
+                <div className="container" style={{ marginTop: '10px' }}>
                     {this.props.selectedGroup ? <h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5> : null}
                     <div>
                         {this.props.selectedGroupImages ? <Masonry>
@@ -63,9 +64,9 @@ class GalleryPage extends React.Component {
                             ))}
                         </Masonry> : null}
                     </div>
-                    {this.state.isZoomed&&this.state.selectedImage.length>0?<ZoomImage image={{src:this.state.selectedImage}} isZoomed={this.state.isZoomed} onUnzoom={this.handleUnzoom} zoomImage={{src:this.state.selectedImage}}/>:null}
-                </Scroller>
-            </div>
+                    {this.state.isZoomed && this.state.selectedImage.length > 0 ? <ZoomImage image={{ src: this.state.selectedImage }} isZoomed={this.state.isZoomed} onUnzoom={this.handleUnzoom} zoomImage={{ src: this.state.selectedImage }} /> : null}
+                </div>
+            </Scroller>
         );
     }
 }
@@ -82,21 +83,21 @@ const mapDispatchToProps = (dispatch) => {
     return {
         getImagesForGroup: (data) => dispatch(actionCreators.getImagesForGroupCheckCache(data)),
         loadMoreImages: (nsid, page) => dispatch(actionCreators.loadMoreImages({ nsid, page })),
-        makeImageFavorite:(data)=>dispatch(actionCreators.makeImageFavorite(data)), 
-        removeImageFavorite:(data)=>dispatch(actionCreators.removeImageFavorite(data))
+        makeImageFavorite: (data) => dispatch(actionCreators.makeImageFavorite(data)),
+        removeImageFavorite: (data) => dispatch(actionCreators.removeImageFavorite(data))
     }
 }
 
-GalleryPage.propTypes={
-    selectedGroupImages:PropTypes.array,
-    loading:PropTypes.bool,
-    selectedGroup:PropTypes.object,
-    scrolling:PropTypes.bool, 
-    getImagesForGroup:PropTypes.func.isRequired,
-    loadMoreImages:PropTypes.func.isRequired,
-    makeImageFavorite:PropTypes.func.isRequired,
-    makeImageFavorite:PropTypes.func.isRequired,
-    removeImageFavorite:PropTypes.func.isRequired
+GalleryPage.propTypes = {
+    selectedGroupImages: PropTypes.array,
+    loading: PropTypes.bool,
+    selectedGroup: PropTypes.object,
+    scrolling: PropTypes.bool,
+    getImagesForGroup: PropTypes.func.isRequired,
+    loadMoreImages: PropTypes.func.isRequired,
+    makeImageFavorite: PropTypes.func.isRequired,
+    makeImageFavorite: PropTypes.func.isRequired,
+    removeImageFavorite: PropTypes.func.isRequired
 }
 
 
