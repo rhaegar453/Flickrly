@@ -57,6 +57,9 @@ class GalleryPage extends React.Component {
             <Scroller onBottom={this.reachedBottom} offset={800}>
                 <div className="container" style={{ marginTop: '10px' }}>
                     {this.props.selectedGroup ? <h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5> : null}
+                    <div className="centeredCss" style={{margin:'30px'}}>
+                    <button className="btn btn-primary" onClick={this.navigateToOverview}>Show Overview</button>
+                    </div>
                     <div>
                         {this.props.selectedGroupImages ? <Masonry>
                             {this.props.selectedGroupImages.map((item, index) => (

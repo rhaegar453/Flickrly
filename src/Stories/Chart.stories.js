@@ -1,8 +1,15 @@
 import React from 'react';
 import Chart from '../Components/Chart';
+import faker from 'faker';
+import _ from 'lodash';
 
-let data5 = [{ name: 'Shivaraj', value: 200 }, { name: 'Sachin', value: 300 }, { name: 'Sheela', value: 220 }, { name: 'Shankar', value: 400 }]
-let data10 = [{ name: 'Shivaraj', value: 200 }, { name: 'Sachin', value: 300 }, { name: 'Sheela', value: 220 }, { name: 'Shankar', value: 400 }, { name: 'Shivaraj', value: 200 }, { name: 'Sachin', value: 300 }, { name: 'Sheela', value: 220 }, { name: 'Shankar', value: 400 }]
+let data5=_.times(5, (i)=>{
+    return {name:faker.name.firstName(), total:faker.random.number()}
+})
+
+let data10=_.times(10, (i)=>{
+    return {name:faker.name.firstName(), total:faker.random.number()}
+})
 
 export default { title: "Chart Component" }
 

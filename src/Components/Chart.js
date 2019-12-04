@@ -1,5 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import PropTypes from 'prop-types';
 
 const Chart = ({data}) => {
     console.log(data);
@@ -26,6 +27,13 @@ const Chart = ({data}) => {
             </BarChart>
         </div>
     );
+}
+
+Chart.propType={
+    data:PropTypes.arrayOf(PropTypes.shape({
+        name:PropTypes.string, 
+        total:PropTypes.number
+    })).isRequired
 }
 
 

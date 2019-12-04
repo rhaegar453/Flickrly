@@ -3,6 +3,8 @@ import React, { Suspense } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { chunk, flatten } from 'lodash';
+import db from '../../Helpers/Dexie';
+import PropTypes from 'prop-types';
 
 const PieChart=React.lazy(()=>import('../PieChart'));
 
@@ -21,10 +23,12 @@ class OverviewPage extends React.Component {
         this.setState({ show: true });
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         let data = this.props.history.location.pathname.split('/');
         let nsid = data[data.length - 1];
-        let images = JSON.parse(localStorage.getItem(nsid));
+        nsid=nsid.toLowerCase();
+        let images=await db.images.where('groupid').equals(nsid).toArray();
+        console.log(images)
         let imagesFormatted = flatten(chunk(images.map(item => {
             return { title: item.title, views: parseInt(item.views), comments: parseInt(item.comments), likes: parseInt(item.likes) }
         }), 10).map((item, index) => {
@@ -38,7 +42,6 @@ class OverviewPage extends React.Component {
                 return item;
             }
         }));
-        console.log(imagesFormatted);
         let imagesByViews = imagesFormatted.map(item => ({ key: item.title, data: item.views }));
         let imagesByComments = imagesFormatted.map(item => ({ key: item.title, data: item.comments }));
         this.setState({ dataByViews: imagesByViews, dataByComments: imagesByComments });
@@ -46,14 +49,14 @@ class OverviewPage extends React.Component {
 
     render() {
         return (
-            <div className="container">
+            <div className="container centeredCss">
                 <div className="row">
 
-                    <div className="col0md-4 col-sd-12">
+                    <div className="col0md-6 col-sd-12">
                         <h1  style={{textAlign:'center'}}>Comments Chart</h1>
                         <Suspense fallback={<div>Loading...</div>}><PieChart data={this.state.dataByComments} label="comments" ></PieChart></Suspense>
                     </div>
-                    <div className="col-md-4 col-sd-12">
+                    <div className="col-md-6 col-sd-12">
                         <h1  style={{textAlign:'center'}}>Likes Chart</h1>
                         <Suspense fallback={<div>Loading...</div>}><PieChart data={this.state.dataByViews} label="likes" ></PieChart></Suspense>
                     </div>
@@ -63,10 +66,8 @@ class OverviewPage extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        images: state.selectedGroupImages
-    }
-}
 
-export default connect(mapStateToProps)(withRouter(OverviewPage));
+
+
+
+export default withRouter(OverviewPage);
