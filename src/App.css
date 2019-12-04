@@ -384,3 +384,19 @@
   font-weight: 400;
   text-shadow: 5px 5px 14px #000;
 }
+
+.mybutton {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-top: 40px;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  border-radius: 20px;
+  background-color: #f300db;
+  color: white;
+  font-size: 15px;
+}

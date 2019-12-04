@@ -12,7 +12,7 @@ const HomeComponent = ({ history }) => {
                 <div class="div-block-25">
                     <div>
                         <h1 class="heading-4">FlickrLy</h1>
-                        <button className="btn btn-block btn-lg btn-danger" onClick={()=>history.push('/groups')}>Go to Groups</button>
+                        <button className="btn btn-block btn-lg mybutton"  onClick={()=>history.push('/groups')}>Go to Groups</button>
                     </div>
                 </div>
             </div>

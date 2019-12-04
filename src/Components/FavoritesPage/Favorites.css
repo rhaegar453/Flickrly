@@ -7,3 +7,11 @@
 .marginate{
     margin: 20px;
 }
+
+.background{
+    width: 100%;
+    height: 93vh;
+    background-color: #e12dee;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#b210e4), to(#3033e4));
+    background-image: linear-gradient(180deg, #b210e4, #3033e4);
+}
