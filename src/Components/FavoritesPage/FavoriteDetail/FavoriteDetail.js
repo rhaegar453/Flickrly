@@ -42,7 +42,7 @@ class FavoriteDetail extends React.Component {
     removeFavoriteImage = (data) => {
         console.log("Removing favorite image ", data);
         this.setState({ data: this.state.data.filter(item => item.photoid != data) });
-        this.props.removeFavorite(data);
+        this.props.removeFavoriteImage(data);
     }
 
     onImageZoom = (url) => {
