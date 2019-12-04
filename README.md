@@ -40,6 +40,10 @@ Location: ('src/middleware/middleware.js')
 
 [Sagas](Flickrly%20Documentation/Sagas.csv)
 
+
+# Site Hosted
+The site is hosted on the following link
+https://flickrly.netlify.com/
  
 
 # Feature Additions from previous version
