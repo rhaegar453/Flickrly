@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import '../../App.css';
+import PropTypes from 'prop-types';
 
 
 
@@ -15,6 +16,10 @@ const HomeComponent = ({ history }) => {
             </div>
         </div>
     );
+}
+
+HomeComponent.propTypes={
+    history:PropTypes.object.isRequired
 }
 
 export default withRouter(HomeComponent);

@@ -70,4 +70,13 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
+SearchBox.propTypes={
+    loading:PropTypes.bool.isRequired,
+    groupRecommendations:PropTypes.array.isRequired,
+    searchQuery:PropTypes.string,
+    searchGroup:PropTypes.func,
+    getGroups:PropTypes.func
+}
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SearchBox));

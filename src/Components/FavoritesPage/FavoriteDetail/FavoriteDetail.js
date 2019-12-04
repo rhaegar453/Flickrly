@@ -6,7 +6,9 @@ import db from '../../../Helpers/Dexie';
 import Masonry from 'react-masonry-component';
 import ZoomImage from 'react-medium-image-zoom';
 import PhotoItem from '../../GalleryPage/PhotoItem/PhotoItem';
+import PropTypes from 'prop-types';
 const GroupFavoriteItem = React.lazy(() => import('./FavoriteGroupItem/FavoriteGroupItem'));
+
 
 
 
@@ -61,14 +63,14 @@ class FavoriteDetail extends React.Component {
                     <Suspense fallback={<div>Loading...</div>}>
                         <Masonry>
                             {this.state.data.map(item => (
-                                <GroupFavoriteItem groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
+                                <GroupFavoriteItem key={item.groupid} groupid={item.groupid} icon={item.icon} name={item.name} removeFavorite={this.removeGroupFavorite} />
                             ))}
                         </Masonry>
                     </Suspense>
                 </div> :
                     <Masonry>
                         {this.state.data.map(item => (
-                            <PhotoItem {...item} removeFavorite={this.removeFavoriteImage} openImage={this.onImageZoom} />
+                            <PhotoItem {...item} key={item.groupid} removeFavorite={this.removeFavoriteImage} openImage={this.onImageZoom} />
                         ))}
                     </Masonry>
                 }
@@ -83,6 +85,11 @@ const mapDispatchToProps = (dispatch) => {
         removeFavorite: (data) => dispatch(removeGroupFavorite(data)),
         removeFavoriteImage: (data) => dispatch(removeImageFavorite(data))
     }
+}
+
+FavoriteDetail.propTypes={
+    removeFavorite:PropTypes.func.isRequired, 
+    removeFavoriteImage:PropTypes.func.isRequired
 }
 
 

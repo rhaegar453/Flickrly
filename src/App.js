@@ -6,7 +6,7 @@ import { Switch, Route } from 'react-router-dom';
 import GroupComponent from './Components/GroupPage/GroupsPage';
 import GalleryPage from './Components/GalleryPage/GalleryPage';
 import HomePage from './Components/HomePage/HomePage';
-import OverviewPage from './Components/OverviewPage';
+import OverviewPage from './Components/OverviewPage/OverviewPage';
 import FavoritesPage from './Components/FavoritesPage/Favorites';
 import FavoriteDetail from './Components/FavoritesPage/FavoriteDetail/FavoriteDetail';
 

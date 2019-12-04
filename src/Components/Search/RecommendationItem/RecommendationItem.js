@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './RecommendationItem.css';
+import PropTypes from 'prop-types';
 
 
 const defaultImageStrategy=(e)=>{
@@ -14,6 +15,12 @@ const RecommendationItem = ({ text, icon, onClick }) => {
             <div className="text-block">{text}</div>
         </div>
     );
+}
+
+RecommendationItem.propTypes={
+    text:PropTypes.string.isRequired, 
+    icon:PropTypes.string.isRequired,
+    onClick:PropTypes.func.isRequired
 }
 
 export default RecommendationItem;

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { chunk, flatten } from 'lodash';
 
-const PieChart=React.lazy(()=>import('./PieChart'));
+const PieChart=React.lazy(()=>import('../PieChart'));
+
 
 class OverviewPage extends React.Component {
     constructor(props) {
@@ -21,7 +22,6 @@ class OverviewPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props)
         let data = this.props.history.location.pathname.split('/');
         let nsid = data[data.length - 1];
         let images = JSON.parse(localStorage.getItem(nsid));
