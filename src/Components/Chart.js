@@ -3,7 +3,6 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend } fro
 import PropTypes from 'prop-types';
 
 const Chart = ({data}) => {
-    console.log(data);
     let final=data.map(item=>({name:item.name, value:item.total}));
     return (
         <div>

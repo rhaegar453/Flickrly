@@ -28,7 +28,6 @@ class OverviewPage extends React.Component {
         let nsid = data[data.length - 1];
         nsid=nsid.toLowerCase();
         let images=await db.images.where('groupid').equals(nsid).toArray();
-        console.log(images)
         let imagesFormatted = flatten(chunk(images.map(item => {
             return { title: item.title, views: parseInt(item.views), comments: parseInt(item.comments), likes: parseInt(item.likes) }
         }), 10).map((item, index) => {

@@ -33,7 +33,6 @@ class GalleryPage extends React.Component {
         this.props.history.push(`/overview/${nsid}`, { name: "Hello World" });
     }
     reachedBottom = () => {
-        console.log("Reached the bottom")
         let data = this.props.history.location.pathname.split('/');
         let groupid = data[data.length - 1];
         this.props.loadMoreImages(groupid, this.state.currentPage + 1);
@@ -56,7 +55,7 @@ class GalleryPage extends React.Component {
     render() {
         return (
             <Scroller onBottom={this.reachedBottom} offset={800}>
-                {console.log(this.props.selectedGroup)}
+
                 <div className="container" style={{ marginTop: '10px' }}>
                     {this.props.selectedGroup ? <h5>Showing photos from "<b>{this.props.selectedGroup.name}</b>"</h5> : null}
                     <div className="centeredCss" style={{margin:'30px'}}>

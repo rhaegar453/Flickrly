@@ -88,7 +88,6 @@ const reducer = (state = initialState, action) => {
         case actions.GET_GROUPS_START:
             return { ...state, loading: true }
         case actions.GET_GROUPS_SUCCESS:
-            console.log(action.payload);
             if (action.payload.text.length > 0) {
                 persistInDB(action.payload.data, action.payload.text, 'groups');
             }
