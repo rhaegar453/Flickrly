@@ -6,18 +6,6 @@ import db from '../../Helpers/Dexie';
 import axios from 'axios';
 
 
-const createIconURL = ({ nsid, iconserver, iconfarm }) => {
-    return `http://farm${iconfarm}.staticflickr.com/${iconserver}/buddyicons/${nsid}.jpg`
-}
-const createImageURL = ({ farmid, serverid, id, secret }) => {
-    return `https://farm${farmid}.staticflickr.com/${serverid}/${id}_${secret}.jpg`
-}
-
-const createImageURLMedium = ({ farmid, serverid, id, secret }) => {
-    return `https://farm${farmid}.staticflickr.com/${serverid}/${id}_${secret}_m.jpg`
-}
-
-
 function* getGroups(action) {
     try {
         yield put(actionCreators.getGroupsStart());

@@ -11,7 +11,6 @@ const initialState = {
     selectedGroup: null,
     selectedGroupImages: null,
     loading: false,
-    selectedGroupWithInfo: null,
     currentPage: 1,
     scrolling: false
 }
